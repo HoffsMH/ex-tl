@@ -24,6 +24,7 @@ defmodule Watcher do
     |> Enum.map(fn {column, path} ->
       content =
         Tl.get_heading_content(column, file_entry)
+        |> Enum.reverse()
         |> Enum.join("\n")
 
       File.write!(Path.expand(path), content)
