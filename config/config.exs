@@ -3,8 +3,6 @@ use Mix.Config
 config :logger,
   level: :debug
 
-config :tl, Tl.Scheduler,
-  storage: Quantum.Storage.Adapter.Implementation
 
 config :tl, Tl.Scheduler,
   jobs: [
