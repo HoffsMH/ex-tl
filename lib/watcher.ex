@@ -11,13 +11,23 @@ defmodule Watcher do
     {:ok, %{watcher_pid: watcher_pid}}
   end
 
-  def handle_info({:file_event, watcher_pid, {path, [:modified, :closed]}}, %{watcher_pid: watcher_pid} = state) do
+  def handle_info(
+        {:file_event, watcher_pid, {path, [:modified, :closed]}},
+        %{watcher_pid: watcher_pid} = state
+      ) do
     # YOUR OWN LOGIC FOR PATH AND EVENTS
     IO.inspect(path)
     IO.inspect(state)
+    file_entry = Tl.get_file_entry()
 
-    File.write!("log", IO.inspect(path))
-    File.write!("log", IO.inspect(state))
+    Tl.columns()
+    |> Enum.map(fn {column, path} ->
+      content =
+        Tl.get_heading_content(column, file_entry)
+        |> Enum.join("\n")
+
+      File.write!(Path.expand(path), content)
+    end)
 
     {:noreply, state}
   end
