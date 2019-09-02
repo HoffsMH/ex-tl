@@ -12,6 +12,8 @@ defmodule Tl.CLI do
 
     ref = Process.monitor(my_monitor)
 
+    # IO.inspect(Application.start())
+
     receive do
       {:DOWN, ^ref, _, _, _} ->
         IO.puts("Process #{inspect(my_monitor)} is down")

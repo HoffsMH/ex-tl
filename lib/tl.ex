@@ -33,4 +33,14 @@ defmodule Tl do
     |> Enum.find(&(Map.get(&1, :value) == "## #{heading}"))
     |> Map.get(:content)
   end
+
+  def logit() do
+    filename = Path.expand("times.md")
+
+    content = File.read!(filename)
+
+    IO.puts "WE OUT HERE"
+
+    File.write!(filename, content <>  Time.to_iso8601(Time.utc_now()))
+  end
 end
