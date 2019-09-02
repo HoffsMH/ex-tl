@@ -14,6 +14,38 @@ defmodule Tl do
     @columns
   end
 
+  def dump_done() do
+    columns = get_file_entry()
+    |> Map.get(:content)
+    |> Tl.Parser.parse()
+
+
+    done = columns
+    |> Enum.find(&(Map.get(&1, :value) == "## Done"))
+
+
+    new_content = columns
+    |> Enum.map(fn %{value: value, content: content} ->
+      if (value === "## Done") do
+        %Tl.Heading{ value: value, content: [] }
+      else
+        %Tl.Heading{ value: value, content: content }
+      end
+    end)
+    |> Enum.reduce("", fn column, acc ->
+      acc <> Tl.Heading.to_string(column)
+    end)
+
+    IO.puts new_content
+
+    IO.puts "OUTPUTING DONE"
+    IO.puts Tl.Heading.to_string(done)
+
+    # Enum.reduce(columns, )
+    # Enum.reduce
+    # File.write(board, new_content)
+  end
+
   def get_done() do
     get_done(FaMap.gen_file_entry("~/personal/01-schedule/board/taskell.md"))
   end
@@ -32,15 +64,5 @@ defmodule Tl do
     |> Tl.Parser.parse()
     |> Enum.find(&(Map.get(&1, :value) == "## #{heading}"))
     |> Map.get(:content)
-  end
-
-  def logit() do
-    filename = Path.expand("times.md")
-
-    content = File.read!(filename)
-
-    IO.puts "WE OUT HERE"
-
-    File.write!(filename, content <>  Time.to_iso8601(Time.utc_now()))
   end
 end

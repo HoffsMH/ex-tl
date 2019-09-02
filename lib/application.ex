@@ -6,7 +6,6 @@ defmodule Tl.Application do
 
     children = [
       # This is the new line
-      Tl.Scheduler
     ]
 
     opts = [strategy: :one_for_one, name: YourApp.Supervisor]
