@@ -10,9 +10,7 @@ defmodule Tl do
     "Done" => "~/personal/00-capture/done.md"
   }
 
-  def columns() do
-    @columns
-  end
+  def columns(), do: @columns
 
   def dump_done() do
     columns = get_file_entry()
