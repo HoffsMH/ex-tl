@@ -5,7 +5,6 @@ defmodule Tl.CLI do
   end
 
   def append(filename, content) do
-
     filename = Path.expand(filename)
 
     File.touch(filename)
@@ -16,21 +15,19 @@ defmodule Tl.CLI do
   def main(["start-server" | rest]) do
     IO.inspect(Enum.at(rest, 0))
 
-    {:ok, my_monitor} =
+    {:ok, board_monitor} =
       Watcher.start_link(
         dirs: [
           Path.expand("~/personal/01-schedule/board/taskell.md")
         ],
-        name: :my_monitor
+        name: :board_monitor
       )
 
-    ref = Process.monitor(my_monitor)
-
-    # IO.inspect(Application.start())
+    ref = Process.monitor(board_monitor)
 
     receive do
       {:DOWN, ^ref, _, _, _} ->
-        IO.puts("Process #{inspect(my_monitor)} is down")
+        IO.puts("Process #{inspect(board_monitor)} is down")
     end
   end
 

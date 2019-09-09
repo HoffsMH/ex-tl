@@ -15,9 +15,7 @@ defmodule Watcher do
         {:file_event, watcher_pid, {path, [:modified, :closed]}},
         %{watcher_pid: watcher_pid} = state
       ) do
-    # YOUR OWN LOGIC FOR PATH AND EVENTS
-    IO.inspect(path)
-    IO.inspect(state)
+
     file_entry = Tl.get_file_entry()
 
     Tl.columns()

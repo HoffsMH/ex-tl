@@ -10,7 +10,7 @@ defmodule Tl.Heading do
   def ensure_formatting(""), do: ""
 
   def ensure_formatting(value) do
-    "\n* #{trim_value(value)}"
+    "\n#{@heading_prefix}#{trim_value(value)}"
   end
 
   def to_string(%{value: value, content: content}) do
