@@ -1,5 +1,4 @@
 defmodule Tl.CLI do
-
   def main(["dump-done"]) do
     append("~/personal/00-capture/hourly.md", "It is" <> Time.to_iso8601(Time.utc_now()))
   end
@@ -8,7 +7,7 @@ defmodule Tl.CLI do
     filename = Path.expand(filename)
 
     File.touch(filename)
-    old_content = File.read!(filename);
+    old_content = File.read!(filename)
     File.write!(filename, old_content <> "\n" <> content)
   end
 
@@ -32,6 +31,23 @@ defmodule Tl.CLI do
   end
 
   def main(args) do
+    Timex.now()
+    |> Timex.format!("%FT%T%:z", :strftime)
+    |> IO.inspect()
+
     IO.inspect(args)
+  end
+
+  def prepend(path, new_content) do
+    with full_path <- Path.expand(path) do
+      File.touch(full_path)
+      {:ok, file} = File.open(full_path)
+      {:ok, current_content} = File.read(full_path)
+
+      full_path
+      |> File.write(new_content <> current_content)
+
+      File.close(file)
+    end
   end
 end

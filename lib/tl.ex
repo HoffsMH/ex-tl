@@ -12,31 +12,55 @@ defmodule Tl do
   def columns(), do: @columns
 
   def dump_done() do
-    columns = get_file_entry()
-    |> Map.get(:content)
-    |> Tl.Parser.parse()
-    |> Enum.reverse()
+    columns =
+      get_file_entry()
+      |> Map.get(:content)
+      |> Tl.Parser.parse()
+      |> Enum.reverse()
 
-    done = columns
-    |> Enum.find(&(Map.get(&1, :value) == "## Done"))
+    done =
+      columns
+      |> Enum.find(&(Map.get(&1, :value) == "## Done"))
 
-    new_content = columns
-    |> Enum.map(fn %{value: value, content: content} ->
-      if (value === "## Done") do
-        %Tl.Heading{ value: value, content: [] }
-      else
-        %Tl.Heading{ value: value, content: content }
-      end
-    end)
-    |> Enum.reduce("", fn column, acc ->
-      acc <> Tl.Heading.to_string(column)
-    end)
+    new_content =
+      columns
+      |> Enum.map(fn %{value: value, content: content} ->
+        if value === "## Done" do
+          %Tl.Heading{value: value, content: []}
+        else
+          %Tl.Heading{value: value, content: content}
+        end
+      end)
+      |> Enum.reduce("", fn column, acc ->
+        acc <> Tl.Heading.to_string(column)
+      end)
 
     File.write!(Path.expand("~/personal/01-schedule/board/taskell.md"), new_content)
 
     timestamp = Time.to_iso8601(Time.utc_now())
 
-    Tl.CLI.append(Path.expand("~/personal/00-capture/done-archive.md"), timestamp <> Tl.Heading.to_string(done))
+    date_string =
+      Timex.now()
+      |> Timex.format!("%F", :strftime)
+
+    time_string =
+      Timex.now()
+      |> Timex.format!("", :strftime)
+
+    header = """
+    =====================================================
+    date: #{date_string} time: #{time_string}
+    =====================================================
+    """
+
+    Timex.now()
+    |> Timex.format!("%FT%T%:z", :strftime)
+    |> IO.inspect()
+
+    Tl.CLI.append(
+      Path.expand("~/personal/00-capture/done-archive.md"),
+      timestamp <> Tl.Heading.to_string(done)
+    )
   end
 
   def get_file_entry() do
