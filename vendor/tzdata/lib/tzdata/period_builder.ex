@@ -46,11 +46,14 @@ defmodule Tzdata.PeriodBuilder do
     # Get the year of the "from" time. We use the standard time with utc offset
     # applied. If for instance we are ahead of UTC and the period starts at the
     # start of a new year we want the new year.
+    from_standard_time_year = 0
     if from == :min do
       from_standard_time_year = @min_year
     else
       {{from_standard_time_year,_,_},{_,_,_}} = :calendar.gregorian_seconds_to_datetime from_standard_time
     end
+
+    max_year_to_use = 100
     if zone_has_until_limit do
       # If zone has an until - use that max year.
       {{{max_year_to_use, _, _}, _}, _} = Map.get(zone_line_hd, :until)

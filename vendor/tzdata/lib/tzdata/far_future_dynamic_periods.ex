@@ -47,6 +47,7 @@ defmodule Tzdata.FarFutureDynamicPeriods do
     end_rule = rules |> tl |> hd
     std_off = begin_rule.save
 
+    until_time_year = 0 
     if length(prev_periods) >= rules_per_year do
       until_time_year = year + 1
     else
