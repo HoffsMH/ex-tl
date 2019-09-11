@@ -6,8 +6,7 @@ defmodule Tl do
     "Warm" => "~/personal/00-capture/warm.md",
     "Selected" => "~/personal/00-capture/selected.md",
     "Waiting on something" => "~/personal/00-capture/waiting-on.md",
-    "Doing" => "~/personal/00-capture/doing.md",
-    "Done" => "~/personal/00-capture/done.md"
+    "Doing" => "~/personal/00-capture/doing.md"
   }
 
   def columns(), do: @columns
