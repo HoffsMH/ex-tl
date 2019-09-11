@@ -28,7 +28,9 @@ defmodule Tl.MixProject do
   defp deps do
     [
       {:fa, path: "../fa"},
-      {:file_system, "~> 0.2"}
+      {:file_system, "~> 0.2"},
+      {:timex, "~> 3.5"},
+      {:tzdata, path: "vendor/tzdata", override: true}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
