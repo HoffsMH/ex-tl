@@ -11,6 +11,8 @@ defmodule Tl do
 
   def columns(), do: @columns
 
+  def say_hi(), do: Tl.CLI.prepend("./ok.md", "hi")
+
   def dump_done() do
     columns =
       get_file_entry()
@@ -47,20 +49,37 @@ defmodule Tl do
       Timex.now()
       |> Timex.format!("", :strftime)
 
-    header = """
-    =====================================================
-    date: #{date_string} time: #{time_string}
-    =====================================================
-    """
+    header = gen_header()
 
     Timex.now()
     |> Timex.format!("%FT%T%:z", :strftime)
     |> IO.inspect()
 
+    content = Tl.Heading.to_string(done)
+    require IEx
+    IEx.pry
+
+
     Tl.CLI.append(
       Path.expand("~/personal/00-capture/done-archive.md"),
       timestamp <> Tl.Heading.to_string(done)
     )
+  end
+
+  def gen_header() do
+    date_string =
+      Timex.now()
+      |> Timex.format!("%F", :strftime)
+
+    time_string =
+      Timex.now()
+      |> Timex.format!("", :strftime)
+
+    """
+    =====================================================
+    date: #{date_string} time: #{time_string}
+    =====================================================
+    """
   end
 
   def get_file_entry() do
