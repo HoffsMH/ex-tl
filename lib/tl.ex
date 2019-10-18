@@ -41,29 +41,16 @@ defmodule Tl do
 
     timestamp = Time.to_iso8601(Time.utc_now())
 
-    date_string =
-      Timex.now()
-      |> Timex.format!("%F", :strftime)
-
-    time_string =
-      Timex.now()
-      |> Timex.format!("", :strftime)
-
     header = gen_header()
 
-    Timex.now()
-    |> Timex.format!("%FT%T%:z", :strftime)
-    |> IO.inspect()
-
     content = Tl.Heading.to_string(done)
-    require IEx
-    IEx.pry
 
-
-    Tl.CLI.append(
-      Path.expand("~/personal/00-capture/done-archive.md"),
-      timestamp <> Tl.Heading.to_string(done)
-    )
+    if content != "\n## Done" do
+      Tl.CLI.prepend(
+        Path.expand("~/personal/00-capture/done-archive.md"),
+        header <> Tl.Heading.to_string(done)
+      )
+    end
   end
 
   def gen_header() do
@@ -73,11 +60,15 @@ defmodule Tl do
 
     time_string =
       Timex.now()
-      |> Timex.format!("", :strftime)
+      |> Timex.shift(hours: -4)
+      |> Timex.format!("%r EDT", :strftime)
+
+    full = Timex.format!(Timex.now(), "{ISO:Extended}")
 
     """
     =====================================================
     date: #{date_string} time: #{time_string}
+    #{full}
     =====================================================
     """
   end
