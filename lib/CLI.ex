@@ -1,8 +1,4 @@
 defmodule Tl.CLI do
-  def main(["dump-done"]) do
-    append("~/personal/00-capture/hourly.md", "It is" <> Time.to_iso8601(Time.utc_now()))
-  end
-
   def append(filename, content) do
     filename = Path.expand(filename)
 
@@ -30,12 +26,74 @@ defmodule Tl.CLI do
     end
   end
 
-  def main(args) do
-    Timex.now()
-    |> Timex.format!("%FT%T%:z", :strftime)
-    |> IO.inspect()
+  def main(["file", "prepend", "date" | filenames]) do
+    {:ok, prefix} = Timex.now()
+    |> Timex.format("%F-", :strftime)
 
-    IO.inspect(args)
+    Enum.each(filenames, fn filename ->
+      full_filename = Path.expand(filename)
+      basename = Path.basename(full_filename)
+      dirname = Path.dirname(full_filename)
+
+      newfilename = Path.expand(dirname <> "/" <> prefix <> basename)
+      IO.inspect(Path.expand(filename))
+      IO.inspect(newfilename)
+
+      File.rename(Path.expand(filename), newfilename)
+    end)
+  end
+
+  def main(["file", "prepend", "datetime" | filenames]) do
+    {:ok, prefix} = Timex.now()
+    |> Timex.Timezone.convert(Timex.Timezone.local())
+    |> Timex.format("%Y-%m-%dT%H:%M:%S.%z-", :strftime)
+
+    Enum.each(filenames, fn filename ->
+      full_filename = Path.expand(filename)
+      basename = Path.basename(full_filename)
+      dirname = Path.dirname(full_filename)
+
+      newfilename = Path.expand(dirname <> "/" <> prefix <> basename)
+      IO.inspect(Path.expand(filename))
+      IO.inspect(newfilename)
+
+      File.rename(Path.expand(filename), newfilename)
+    end)
+  end
+
+  def main(["file", "create", "datetime" | filenames]) do
+    {:ok, prefix} = Timex.now()
+    |> Timex.Timezone.convert(Timex.Timezone.local())
+    |> Timex.format("%Y-%m-%dT%H:%M:%S.%z-", :strftime)
+
+    Enum.each(filenames, fn filename ->
+      full_filename = Path.expand(filename)
+      basename = Path.basename(full_filename)
+      dirname = Path.dirname(full_filename)
+
+      newfilename = Path.expand(dirname <> "/" <> prefix <> basename)
+      IO.inspect(Path.expand(filename))
+      IO.inspect(newfilename)
+
+      File.touch(newfilename)
+    end)
+  end
+
+  def main(["jrnl" | filenames]) do
+    jrnl_path = Path.expand("~/personal/jrnl/")
+    System.cmd("/usr/bin/subl3", [jrnl_path])
+
+    Enum.each(filenames, fn filename ->
+      full_filename = Path.expand(filename)
+      basename = Path.basename(full_filename)
+      dirname = Path.dirname(full_filename)
+
+      newfilename = Path.expand(dirname <> "/" <> prefix <> basename)
+      IO.inspect(Path.expand(filename))
+      IO.inspect(newfilename)
+
+      File.touch(newfilename)
+    end)
   end
 
   def prepend(path, new_content) do
