@@ -2,6 +2,7 @@ defmodule Tl do
   @moduledoc """
   Documentation for Tl.
   """
+
   @columns %{
     "Warm" => "~/personal/00-capture/warm.md",
     "Selected" => "~/personal/00-capture/selected.md",
@@ -10,8 +11,6 @@ defmodule Tl do
   }
 
   def columns(), do: @columns
-
-  def say_hi(), do: Tl.CLI.prepend("./ok.md", "hi")
 
   def dump_done() do
     columns =
@@ -46,10 +45,11 @@ defmodule Tl do
     content = Tl.Heading.to_string(done)
 
     if content != "\n## Done" do
-      Tl.CLI.prepend(
+      Tl.File.call([
+        "prepend",
         Path.expand("~/personal/00-capture/done-archive.md"),
         header <> Tl.Heading.to_string(done)
-      )
+      ])
     end
   end
 
