@@ -30,7 +30,7 @@ defmodule Tl.Filename do
       IO.inspect(Path.expand(filename))
       IO.inspect(newfilename)
 
-      File.touch(newfilename)
+      File.rename(filename, newfilename)
     end)
   end
 end
