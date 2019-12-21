@@ -39,7 +39,6 @@ defmodule Tl.Jrnl do
   def call(["new", entry_name]) do
     System.cmd("touch", [full_jrnl_path() <> "/#{entry_name}.md"])
     Tl.Filename.call(["prepend", "datetime", full_jrnl_path() <> "/#{entry_name}.md"])
-    System.cmd(@editor, [full_jrnl_path()])
   end
 
   def archive_gpg() do
