@@ -6,10 +6,11 @@ defmodule Tl.Application do
 
     children = [
       # This is the new line
-      Tl.Scheduler
+      Tl.Scheduler,
+      Tl.Cmd.Supervisor
     ]
 
-    opts = [strategy: :one_for_one, name: YourApp.Supervisor]
+    opts = [strategy: :one_for_one, name: Tl.Application]
     Supervisor.start_link(children, opts)
   end
 end

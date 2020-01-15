@@ -12,30 +12,20 @@ defmodule Tl.Watcher do
   end
 
   def handle_info(
-        {:file_event, watcher_pid, {path, [:modified, :closed]}},
-        %{watcher_pid: watcher_pid} = state
+        {:file_event, _watcher_pid, {_path, [:modified, :closed]}},
+        %{watcher_pid: _watcher_pid} = state
       ) do
-    file_entry = Tl.get_file_entry()
-
-    Tl.columns()
-    |> Enum.map(fn {column, path} ->
-      content =
-        Tl.get_heading_content(column, file_entry)
-        |> Enum.reverse()
-        |> Enum.join("\n")
-
-      File.write!(Path.expand(path), content)
-    end)
+    Tl.Taskell.SplitColumns.call()
 
     {:noreply, state}
   end
+
 
   def handle_info({:file_event, watcher_pid, {path, events}}, %{watcher_pid: watcher_pid} = state) do
     {:noreply, state}
   end
 
   def handle_info({:file_event, watcher_pid, :stop}, %{watcher_pid: watcher_pid} = state) do
-    # YOUR OWN LOGIC WHEN MONITOR STOP
     {:noreply, state}
   end
 end

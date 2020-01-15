@@ -27,7 +27,6 @@ defmodule Tl.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:fa, path: "../fa"},
       {:file_system, "~> 0.2"},
       {:timex, "~> 3.5"},
       {:quantum, "~> 2.3"},

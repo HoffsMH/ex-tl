@@ -1,7 +1,13 @@
 defmodule Tl.CLI do
+  def board() do
+    Application.get_env(:tl, :paths)
+    |> Access.get(:taskell_board)
+    |> Path.expand()
+  end
 
+  def main([]), do: main(["help"])
   def main(["help"]) do
-    IO.puts """
+    IO.puts("""
     - start-server
     - filename
       - prepend
@@ -14,21 +20,21 @@ defmodule Tl.CLI do
       - lock
       - unlock
       - new <name>
-    """
+    """)
   end
 
   def main(["start-server" | rest]) do
-    IO.inspect(Enum.at(rest, 0))
-
     {:ok, board_monitor} =
       Tl.Watcher.start_link(
-        dirs: [
-          Path.expand("~/personal/01-schedule/board/taskell.md")
-        ],
+        dirs: [ board() ],
         name: :board_monitor
       )
 
     ref = Process.monitor(board_monitor)
+
+    Tl.Cmd.perform_cmds([
+      {"xset", ["r", "rate", "200", "30"]}
+    ])
 
     receive do
       {:DOWN, ^ref, _, _, _} ->

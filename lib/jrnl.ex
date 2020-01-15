@@ -1,22 +1,37 @@
 defmodule Tl.Jrnl do
-  @jrnl_dir "~/personal/jrnl"
-  @editor "/usr/bin/subl3"
+  def paths(key) do
+    Application.get_env(:tl, :paths)[key]
+  end
+
+  def settings(key) do
+    Application.get_env(:tl, :settings)[key]
+  end
+
+  def jrnl_dir, do: paths(:jrnl_dir)
+  def jrnl_archive, do: paths(:jrnl_archive)
+
+  def email, do: settings(:gpg_email)
+
+  def config do
+    Application.get_env(:tl, Tl.Jrnl)
+  end
 
   def call(["lock"]) do
     File.cd!(full_jrnl_path())
-    tar_filename = jrnl_tar_filename
+    tar_filename = jrnl_tar_filename()
     System.cmd("tar", ["-cf", tar_filename | entry_list() |> Enum.map(&Path.basename/1)])
-    System.cmd("gpg", ["--encrypt", "--recipient", "matthecker@pm.me", tar_filename])
+    System.cmd("gpg", ["--encrypt", "--recipient", email(), tar_filename])
 
     entry_list()
     |> Enum.each(&File.rm!/1)
+
     File.rm!(tar_filename)
 
     archive_gpg()
   end
 
   def jrnl_tar_filename() do
-    "#{Tl.Time.datestamp}-#{files_digest(entry_list())}.tar"
+    "#{Tl.Time.datestamp()}-#{files_digest(entry_list())}.tar"
   end
 
   def call(["unlock"]) do
@@ -44,7 +59,8 @@ defmodule Tl.Jrnl do
   def archive_gpg() do
     gpg_list
     |> Enum.each(fn filename ->
-      File.cp!(filename, Path.expand("~/personal/personal-reference/jrnlarchive/#{Path.basename(filename)}"))
+      filename
+      |> File.cp!(Path.expand(jrnl_archive <> "/#{Path.basename(filename)}"))
     end)
   end
 
@@ -61,10 +77,11 @@ defmodule Tl.Jrnl do
   end
 
   def full_jrnl_path() do
-    Path.expand(@jrnl_dir)
+    Path.expand(jrnl_dir)
   end
 
   def files_digest([]), do: ""
+
   def files_digest(filenames) do
     {content, 0} = System.cmd("cat", filenames)
 
@@ -74,7 +91,7 @@ defmodule Tl.Jrnl do
     |> String.slice(-10, 10)
   end
 
-  def digest_jrnl_content () do
+  def digest_jrnl_content() do
     files_digest(entry_list)
   end
 end
