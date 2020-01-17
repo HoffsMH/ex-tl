@@ -24,5 +24,6 @@ config :tl, :taskell_columns, %{
   "Warm" => "~/personal/00-capture/warm.md",
   "Selected" => "~/personal/00-capture/selected.md",
   "Waiting on something" => "~/personal/00-capture/waiting-on.md",
+  "Today" => "~/personal/00-capture/today.md",
   "Doing" => "~/personal/00-capture/doing.md"
 }
