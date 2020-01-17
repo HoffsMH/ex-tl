@@ -4,7 +4,7 @@ defmodule Tl.Jrnl do
   end
 
   def settings(key) do
-    Application.get_env(:tl, :settings)[key]
+    Application.get_env(:tl, :user)[key]
   end
 
   def jrnl_dir, do: paths(:jrnl_dir)
