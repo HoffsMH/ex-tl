@@ -20,7 +20,13 @@ defmodule Tl.CLI do
       - lock
       - unlock
       - new <name>
+    - taskell
+      - split
     """)
+  end
+
+  def main(["taskell" | rest]) do
+    Tl.Taskell.call(rest)
   end
 
   def main(["start-server" | rest]) do
