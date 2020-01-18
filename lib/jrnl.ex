@@ -1,16 +1,16 @@
 defmodule Tl.Jrnl do
-  def paths(key) do
+  def paths_config(key) do
     Application.get_env(:tl, :paths)[key]
   end
 
-  def settings(key) do
+  def user_config(key) do
     Application.get_env(:tl, :user)[key]
   end
 
-  def jrnl_dir, do: paths(:jrnl_dir)
-  def jrnl_archive, do: paths(:jrnl_archive)
+  def jrnl_dir, do: paths_config(:jrnl_dir)
+  def jrnl_archive, do: paths_config(:jrnl_archive)
 
-  def email, do: settings(:gpg_email)
+  def email, do: user_config(:gpg_email)
 
   def config do
     Application.get_env(:tl, Tl.Jrnl)
