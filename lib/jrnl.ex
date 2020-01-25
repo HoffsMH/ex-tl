@@ -20,7 +20,7 @@ defmodule Tl.Jrnl do
     File.cd!(full_jrnl_path())
     tar_filename = jrnl_tar_filename()
     System.cmd("tar", ["-cf", tar_filename | entry_list() |> Enum.map(&Path.basename/1)])
-    System.cmd("gpg", ["--encrypt", "--recipient", email(), tar_filename])
+    Tl.Cmd.exec("gpg", ["--encrypt", "--recipient", email(), tar_filename])
 
     entry_list()
     |> Enum.each(&File.rm!/1)
@@ -40,19 +40,19 @@ defmodule Tl.Jrnl do
 
     gpg_list()
     |> Enum.each(fn filename ->
-      System.cmd("gpg", ["--decrypt", "--use-embedded-filename", filename])
+      Tl.Cmd.exec("gpg", ["--decrypt", "--use-embedded-filename", filename])
       File.rm!(filename)
     end)
 
     tar_list()
     |> Enum.map(fn filename ->
-      System.cmd("tar", ["-xf", filename])
+      Tl.Cmd.exec("tar", ["-xf", filename])
       File.rm!(filename)
     end)
   end
 
   def call(["new", entry_name]) do
-    System.cmd("touch", [full_jrnl_path() <> "/#{entry_name}.md"])
+    Tl.Cmd.exec("touch", [full_jrnl_path() <> "/#{entry_name}.md"])
     Tl.Filename.call(["prepend", "datetime", full_jrnl_path() <> "/#{entry_name}.md"])
   end
 
@@ -60,7 +60,7 @@ defmodule Tl.Jrnl do
     gpg_list
     |> Enum.each(fn filename ->
       filename
-      |> File.cp!(Path.expand(jrnl_archive <> "/#{Path.basename(filename)}"))
+      |> File.cp!(Path.expand(jrnl_archive() <> "/#{Path.basename(filename)}"))
     end)
   end
 
@@ -77,12 +77,13 @@ defmodule Tl.Jrnl do
   end
 
   def full_jrnl_path() do
-    Path.expand(jrnl_dir)
+    Path.expand(jrnl_dir())
   end
 
   def files_digest([]), do: ""
 
   def files_digest(filenames) do
+    # I want to use System.cmd here
     {content, 0} = System.cmd("cat", filenames)
 
     :crypto.hash(:sha256, content)
@@ -92,6 +93,6 @@ defmodule Tl.Jrnl do
   end
 
   def digest_jrnl_content() do
-    files_digest(entry_list)
+    files_digest(entry_list())
   end
 end

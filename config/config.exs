@@ -20,6 +20,9 @@ config :tl, :paths,
   taskell_board: "~/personal/01-schedule/board/taskell.md",
   done_archive: "~/personal/00-capture/done-archive.md"
 
+# where we store our monthly log files
+config :tl, :cmd, logfile_dir: "~/.tl/"
+
 config :tl, :taskell_columns, %{
   "Warm" => "~/personal/00-capture/warm.md",
   "Selected" => "~/personal/00-capture/selected.md",

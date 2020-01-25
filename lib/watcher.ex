@@ -20,7 +20,6 @@ defmodule Tl.Watcher do
     {:noreply, state}
   end
 
-
   def handle_info({:file_event, watcher_pid, {path, events}}, %{watcher_pid: watcher_pid} = state) do
     {:noreply, state}
   end

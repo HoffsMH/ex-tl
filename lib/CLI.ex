@@ -6,9 +6,11 @@ defmodule Tl.CLI do
   end
 
   def main([]), do: main(["help"])
+
   def main(["help"]) do
     IO.puts("""
-    - start-server
+    - start
+    - startx
     - filename
       - prepend
         - date
@@ -29,23 +31,12 @@ defmodule Tl.CLI do
     Tl.Taskell.call(rest)
   end
 
-  def main(["start-server" | rest]) do
-    {:ok, board_monitor} =
-      Tl.Watcher.start_link(
-        dirs: [ board() ],
-        name: :board_monitor
-      )
+  def main(["start" | rest]) do
+    Tl.Start.call(rest)
+  end
 
-    ref = Process.monitor(board_monitor)
-
-    Tl.Cmd.perform_cmds([
-      {"xset", ["r", "rate", "200", "30"]}
-    ])
-
-    receive do
-      {:DOWN, ^ref, _, _, _} ->
-        IO.puts("Process #{inspect(board_monitor)} is down")
-    end
+  def main(["startx" | rest]) do
+    Tl.Startx.call(rest)
   end
 
   def main(["filename" | rest]) do

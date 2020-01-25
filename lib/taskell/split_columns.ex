@@ -11,8 +11,8 @@ defmodule Tl.Taskell.SplitColumns do
 
   def columns(), do: Application.get_env(:tl, :taskell_columns)
 
+  def call(_args), do: call()
 
-  def call(args), do: call()
   def call() do
     content = board_content()
 

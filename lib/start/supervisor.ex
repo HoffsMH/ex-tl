@@ -1,4 +1,4 @@
-defmodule Tl.Cmd.Supervisor do
+defmodule Tl.Start.Supervisor do
   use Supervisor
 
   def start_link(opts) do
@@ -7,7 +7,7 @@ defmodule Tl.Cmd.Supervisor do
 
   def init(:ok) do
     children = [
-      # worker(Tl.Cmd, ["redshift", []]),
+      worker(Tl.Periodically, [])
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

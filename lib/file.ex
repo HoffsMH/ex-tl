@@ -21,8 +21,9 @@ defmodule Tl.File do
   def append(filename, content) do
     filename = Path.expand(filename)
 
-    File.touch(filename)
-    old_content = File.read!(filename)
-    File.write!(filename, old_content <> "\n" <> content)
+    {:ok, file} = File.open(Path.expand(filename), [:append])
+
+    IO.write(file, "\n" <> content)
+    File.close(file)
   end
 end
