@@ -28,3 +28,4 @@ config/prod.exs
 
 done.md
 
+/config/machine_specific.exs
