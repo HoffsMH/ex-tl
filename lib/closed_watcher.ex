@@ -1,22 +1,21 @@
-defmodule Tl.Watcher do
+defmodule Tl.ClosedWatcher do
   use GenServer
 
   def start_link(args) do
     GenServer.start_link(__MODULE__, args)
   end
 
-  def init(args) do
-    {:ok, watcher_pid} = FileSystem.start_link(args)
+  def init([fs_args: fs_args, call_mod: call_mod]) do
+    {:ok, watcher_pid} = FileSystem.start_link(fs_args)
     FileSystem.subscribe(watcher_pid)
-    {:ok, %{watcher_pid: watcher_pid}}
+    {:ok, %{watcher_pid: watcher_pid, call_mod: call_mod }}
   end
 
   def handle_info(
         {:file_event, _watcher_pid, {_path, [:modified, :closed]}},
-        %{watcher_pid: _watcher_pid} = state
+        %{call_mod: call_mod} = state
       ) do
-    Tl.Taskell.SplitColumns.call()
-
+    call_mod.call()
     {:noreply, state}
   end
 

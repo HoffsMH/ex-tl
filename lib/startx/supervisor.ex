@@ -14,9 +14,12 @@ defmodule Tl.Startx.Supervisor do
   def init(:ok) do
     children = [
       worker(Tl.Cmd, ["/usr/bin/redshift", []], id: :redshift),
-      # worker(Tl.Cmd, ["/usr/bin/clipmenud", []], id: :clipmenud),
+      worker(Tl.Cmd, ["/usr/bin/clipmenud", []], id: :clipmenud),
       worker(Tl.Cmd, ["/usr/bin/sxhkd", []], id: :sxhkd),
-      worker(Tl.Watcher, [[dirs: [board()], name: :board_monitor]]),
+      worker(Tl.ClosedWatcher, [[
+        fs_args: [dirs: [board()], name: :board_monitor],
+        call_mod: Tl.Taskell.SplitColumns
+      ]]),
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

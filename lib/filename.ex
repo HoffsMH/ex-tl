@@ -4,17 +4,7 @@ defmodule Tl.Filename do
       Timex.now()
       |> Timex.format("%F-", :strftime)
 
-    Enum.each(filenames, fn filename ->
-      full_filename = Path.expand(filename)
-      basename = Path.basename(full_filename)
-      dirname = Path.dirname(full_filename)
-
-      newfilename = Path.expand(dirname <> "/" <> prefix <> basename)
-      IO.inspect(Path.expand(filename))
-      IO.inspect(newfilename)
-
-      File.rename(Path.expand(filename), newfilename)
-    end)
+    prepend(prefix, filenames)
   end
 
   def call(["prepend", "datetime" | filenames]) do
@@ -23,15 +13,20 @@ defmodule Tl.Filename do
       |> Timex.Timezone.convert(Timex.Timezone.local())
       |> Timex.format("%Y-%m-%dT%H:%M:%S.%z-", :strftime)
 
+      prepend(prefix, filenames)
+  end
+
+  def call(["prepend", text | filenames]) do
+    prepend(text, filenames)
+  end
+
+  def prepend(prefix, filenames) do
     Enum.each(filenames, fn filename ->
       full_filename = Path.expand(filename)
       basename = Path.basename(full_filename)
       dirname = Path.dirname(full_filename)
 
       newfilename = Path.expand(dirname <> "/" <> prefix <> basename)
-      IO.inspect(Path.expand(filename))
-      IO.inspect(newfilename)
-
       File.rename(filename, newfilename)
     end)
   end

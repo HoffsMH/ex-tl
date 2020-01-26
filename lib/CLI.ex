@@ -9,7 +9,6 @@ defmodule Tl.CLI do
 
   def main(["help"]) do
     IO.puts("""
-    - start
     - startx
     - filename
       - prepend

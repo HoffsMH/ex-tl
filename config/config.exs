@@ -1,13 +1,9 @@
 use Mix.Config
 
-config :tl, Tl, main_board: "~/personal/"
-
-config :logger,
-  level: :debug
-
 config :tl, Tl.Scheduler,
   jobs: [
-    {"0 */3 * * *", {Tl.Taskell.ArchiveDone, :call, []}}
+    {"0 */3 * * *", {Tl.Taskell.ArchiveDone, :call, []}},
+    {"*/15 * * * *", {Tl.Jrnl.AutoLock, :call, []}}
   ]
 
 config :tl, :user,
@@ -30,3 +26,5 @@ config :tl, :taskell_columns, %{
   "Today" => "~/personal/00-capture/today.md",
   "Doing" => "~/personal/00-capture/doing.md"
 }
+
+import_config "machine_specific.exs"
