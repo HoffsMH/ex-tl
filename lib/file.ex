@@ -21,6 +21,12 @@ defmodule Tl.File do
   def append(filename, content) do
     filename = Path.expand(filename)
 
+    if !File.regular?(filename) do
+      Path.dirname(filename)
+      |> File.mkdir_p!
+
+      File.touch!(filename)
+    end
     {:ok, file} = File.open(Path.expand(filename), [:append])
 
     IO.write(file, "\n" <> content)

@@ -16,6 +16,10 @@ defmodule Tl.Startx.Supervisor do
       worker(Tl.Cmd, ["/usr/bin/redshift", []], id: :redshift),
       worker(Tl.Cmd, ["/usr/bin/clipmenud", []], id: :clipmenud),
       worker(Tl.Cmd, ["/usr/bin/sxhkd", []], id: :sxhkd),
+      worker(Tl.Cmd, ["/usr/bin/kitty", []], id: :kitty, restart: :temporary),
+      worker(Tl.Cmd, ["/usr/bin/google-chrome-stable", []], id: :chrome, restart: :temporary),
+      worker(Tl.Cmd, ["/usr/bin/firefox", []], id: :firefox, restart: :temporary),
+      worker(Tl.Cmd, ["/usr/bin/slack", []], id: :slack, restart: :temporary),
       worker(Tl.ClosedWatcher, [[
         fs_args: [dirs: [board()], name: :board_monitor],
         call_mod: Tl.Taskell.SplitColumns

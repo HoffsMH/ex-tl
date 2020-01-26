@@ -25,8 +25,8 @@ defmodule Tl.Cmd do
   end
 
   def exec(cmd, args) do
+    log("attempting cmd: #{cmd}")
     {output, exit_code} = System.cmd(cmd, args)
-
 
     log(cmd, exit_code, output)
     {output, exit_code}
@@ -34,6 +34,10 @@ defmodule Tl.Cmd do
 
   def log(cmd, exit_code, output) do
     Tl.log("cmd", "[cmd: #{cmd}] [exit code: #{exit_code}]: #{output}")
+  end
+
+  def log(text) do
+    Tl.log("cmd", text)
   end
 
   def exec_and_halt(pid, cmd, args) do

@@ -30,10 +30,10 @@ config :tl, :taskell_columns, %{
 
 config :tl, :run_once,
   [
-    {"/usr/bin/kitty", []},
-    {"/usr/bin/google-chrome-stable", []},
-    {"/usr/bin/firefox", []},
-    {"/usr/bin/slack", []},
   ]
 
-import_config "machine_specific.exs"
+
+if File.regular?("./config/machine_specific.exs") do
+  IO.puts "found machine specific config"
+  import_config "machine_specific.exs"
+end
