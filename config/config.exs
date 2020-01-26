@@ -14,7 +14,8 @@ config :tl, :paths,
   jrnl_dir: "~/personal/jrnl",
   jrnl_archive: "~/personal/personal-reference/jrnlarchive",
   taskell_board: "~/personal/01-schedule/board/taskell.md",
-  done_archive: "~/personal/00-capture/done-archive.md"
+  done_archive: "~/personal/00-capture/done-archive.md",
+  capture_file: "~/personal/00-capture/capture.md"
 
 # where we store our monthly log files
 config :tl, :cmd, logfile_dir: "~/.tl/"
@@ -26,5 +27,13 @@ config :tl, :taskell_columns, %{
   "Today" => "~/personal/00-capture/today.md",
   "Doing" => "~/personal/00-capture/doing.md"
 }
+
+config :tl, :run_once,
+  [
+    {"/usr/bin/kitty", []},
+    {"/usr/bin/google-chrome-stable", []},
+    {"/usr/bin/firefox", []},
+    {"/usr/bin/slack", []},
+  ]
 
 import_config "machine_specific.exs"

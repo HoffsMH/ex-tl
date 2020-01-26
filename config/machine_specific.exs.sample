@@ -1,0 +1,6 @@
+use Mix.Config
+
+config :tl, :run_once,
+  [
+    {"/usr/bin/kitty", []},
+  ]

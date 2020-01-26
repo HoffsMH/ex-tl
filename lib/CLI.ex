@@ -1,7 +1,6 @@
 defmodule Tl.CLI do
-  def board() do
-    Application.get_env(:tl, :paths)
-    |> Access.get(:taskell_board)
+  def cap_file() do
+    Application.get_env(:tl, :paths)[:capture_file]
     |> Path.expand()
   end
 
@@ -9,14 +8,15 @@ defmodule Tl.CLI do
 
   def main(["help"]) do
     IO.puts("""
+    - cap <quick content>
     - startx
     - filename
-      - prepend
-        - date
-        - datetime
+      - prepend <filenames>
+        - date <filenames>
+        - datetime <filenames>
     - file
-      - prepend <content>
-      - append <content>
+      - prepend <filename> <content>
+      - append <filename> <content>
     - jrnl
       - lock
       - unlock
@@ -28,10 +28,6 @@ defmodule Tl.CLI do
 
   def main(["taskell" | rest]) do
     Tl.Taskell.call(rest)
-  end
-
-  def main(["start" | rest]) do
-    Tl.Start.call(rest)
   end
 
   def main(["startx" | rest]) do
@@ -48,5 +44,14 @@ defmodule Tl.CLI do
 
   def main(["jrnl" | rest]) do
     Tl.Jrnl.call(rest)
+  end
+
+
+  def main(["cap" | args]) do
+    content = args
+    |> Enum.join(" ")
+    |> IO.inspect()
+
+    Tl.File.append(cap_file(), "- " <> content)
   end
 end
