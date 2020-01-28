@@ -1,5 +1,7 @@
 use Mix.Config
 
+config :logger, level: :warn
+
 config :tl, Tl.Scheduler,
   jobs: [
     {"0 */3 * * *", {Tl.Taskell.ArchiveDone, :call, []}},
@@ -28,12 +30,9 @@ config :tl, :taskell_columns, %{
   "Doing" => "~/personal/00-capture/doing.md"
 }
 
-config :tl, :run_once,
-  [
-  ]
-
+config :tl, :run_once, []
 
 if File.regular?("./config/machine_specific.exs") do
-  IO.puts "found machine specific config"
+  IO.puts("found machine specific config")
   import_config "machine_specific.exs"
 end

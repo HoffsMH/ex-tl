@@ -13,7 +13,7 @@ defmodule Tl.Log do
 
   def log(context, text) do
     current_log_file
-    |>Tl.File.append(log_prefix(context) <> " " <> text)
+    |> Tl.File.append(log_prefix(context) <> " " <> text)
   end
 
   def log_prefix(context) do

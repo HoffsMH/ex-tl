@@ -5,10 +5,10 @@ defmodule Tl.ClosedWatcher do
     GenServer.start_link(__MODULE__, args)
   end
 
-  def init([fs_args: fs_args, call_mod: call_mod]) do
+  def init(fs_args: fs_args, call_mod: call_mod) do
     {:ok, watcher_pid} = FileSystem.start_link(fs_args)
     FileSystem.subscribe(watcher_pid)
-    {:ok, %{watcher_pid: watcher_pid, call_mod: call_mod }}
+    {:ok, %{watcher_pid: watcher_pid, call_mod: call_mod}}
   end
 
   def handle_info(

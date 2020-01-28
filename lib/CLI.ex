@@ -53,9 +53,10 @@ defmodule Tl.CLI do
   end
 
   def main(["cap" | args]) do
-    content = args
-    |> Enum.join(" ")
-    |> IO.inspect()
+    content =
+      args
+      |> Enum.join(" ")
+      |> IO.inspect()
 
     Tl.File.append(cap_file(), "- " <> content)
   end

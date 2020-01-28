@@ -10,23 +10,22 @@ defmodule Tl.Taskell.SplitColumns do
   def call(_args), do: call()
 
   def call() do
-    with {:ok, board_file } <- File.open(board(), [:read]),
-    content <- IO.binread(board_file, :all) do
-    File.close(board_file)
-    log("successfully opened  and closed #{board()}")
+    with {:ok, board_file} <- File.open(board(), [:read]),
+         content <- IO.binread(board_file, :all) do
+      File.close(board_file)
+      log("successfully opened  and closed #{board()}")
 
       columns()
       |> Enum.map(fn {column_name, column_path} ->
-
         new_content =
           get_heading_content(column_name, content)
           |> Enum.reverse()
           |> Enum.join("\n")
 
-          {:ok, file } = File.open(Path.expand(column_path), [:write])
-          IO.binwrite(file, new_content)
-          File.close(file)
-          log("successfully wrote to #{column_path} : #{new_content}")
+        {:ok, file} = File.open(Path.expand(column_path), [:write])
+        IO.binwrite(file, new_content)
+        File.close(file)
+        log("successfully wrote to #{column_path} : #{new_content}")
       end)
     end
   end

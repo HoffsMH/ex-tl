@@ -23,10 +23,11 @@ defmodule Tl.File do
 
     if !File.regular?(filename) do
       Path.dirname(filename)
-      |> File.mkdir_p!
+      |> File.mkdir_p!()
 
       File.touch!(filename)
     end
+
     {:ok, file} = File.open(Path.expand(filename), [:append])
 
     IO.write(file, "\n" <> content)

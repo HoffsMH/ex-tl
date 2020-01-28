@@ -13,7 +13,7 @@ defmodule Tl.Filename do
       |> Timex.Timezone.convert(Timex.Timezone.local())
       |> Timex.format("%Y-%m-%dT%H:%M:%S.%z-", :strftime)
 
-      prepend(prefix, filenames)
+    prepend(prefix, filenames)
   end
 
   def call(["prepend", text | filenames]) do

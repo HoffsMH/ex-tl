@@ -35,7 +35,7 @@ defmodule Tl.Jrnl do
   end
 
   def call(["unlock"]) do
-    IO.puts "current dir is #{File.cwd!()}"
+    IO.puts("current dir is #{File.cwd!()}")
     File.cd!(full_jrnl_path())
     archive_gpg()
 

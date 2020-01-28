@@ -22,10 +22,12 @@ defmodule Tl.Startx.Supervisor do
       worker(Tl.Cmd, ["/usr/bin/slack", []], id: :slack, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/pcloud", []], id: :pcloud_1, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/pcloud", []], id: :pcloud_2, restart: :temporary),
-      worker(Tl.ClosedWatcher, [[
-        fs_args: [dirs: [board()], name: :board_monitor],
-        call_mod: Tl.Taskell.SplitColumns
-      ]]),
+      worker(Tl.ClosedWatcher, [
+        [
+          fs_args: [dirs: [board()], name: :board_monitor],
+          call_mod: Tl.Taskell.SplitColumns
+        ]
+      ])
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
