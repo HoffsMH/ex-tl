@@ -35,19 +35,20 @@ defmodule Tl.Jrnl do
   end
 
   def call(["unlock"]) do
+    IO.puts "current dir is #{File.cwd!()}"
     File.cd!(full_jrnl_path())
     archive_gpg()
 
-    gpg_list()
-    |> Enum.each(fn filename ->
-      Tl.Cmd.exec("gpg", ["--decrypt", "--use-embedded-filename", filename])
-      File.rm!(filename)
-    end)
+    sorted_gpg_list()
+    |> Enum.each(fn gpg_file ->
+      Tl.Cmd.exec("gpg", ["--decrypt", "--use-embedded-filename", gpg_file])
+      File.rm!(gpg_file)
 
-    tar_list()
-    |> Enum.map(fn filename ->
-      Tl.Cmd.exec("tar", ["-xf", filename])
-      File.rm!(filename)
+      tar_list()
+      |> Enum.map(fn tar_file ->
+        Tl.Cmd.exec("tar", ["-xkvf", tar_file])
+        File.rm!(tar_file)
+      end)
     end)
   end
 
@@ -57,15 +58,21 @@ defmodule Tl.Jrnl do
   end
 
   def archive_gpg() do
-    gpg_list
+    sorted_gpg_list
     |> Enum.each(fn filename ->
       filename
       |> File.cp!(Path.expand(jrnl_archive() <> "/#{Path.basename(filename)}"))
     end)
   end
 
-  def gpg_list() do
+  def sorted_gpg_list() do
     Path.wildcard(full_jrnl_path() <> "/*.gpg")
+    |> Enum.sort_by(fn gpg_file ->
+      gpg_file
+      |> File.stat!(time: :posix)
+      |> Map.get(:ctime)
+    end)
+    |> Enum.reverse()
   end
 
   def tar_list() do
