@@ -6,8 +6,12 @@
 
 - investigate what would be needed to get syncthing into TL and whether or not it would be worth it
 - add the ability to copy a ## heading and its content and automatically create a new md file that is named appropriately
-- jrnl lock is no longer jrnl specific
 - randomly create a puzzle game
+- investigate getting all systemctl work in bootstrap into tl
+    * [ ] restic backup
+    * [ ] syncthing
+    * [ ] cpupower
+- What happens when restic is run and nothing left to backup?
 
 ## Selected
 
@@ -15,6 +19,7 @@
     * [ ] possibly split and the parsing inside
     * [ ] possibly startx
     * [ ] possibly jrnl
+- jrnl lock is no longer jrnl specific
 
 ## Waiting on Something
 
