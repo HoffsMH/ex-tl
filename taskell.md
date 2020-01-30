@@ -20,6 +20,7 @@
     * [ ] possibly startx
     * [ ] possibly jrnl
 - jrnl lock is no longer jrnl specific
+- jrnl lock is really buggy now that its been fixed lol
 
 ## Waiting on Something
 
