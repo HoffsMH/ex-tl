@@ -13,6 +13,7 @@
     * [ ] cpupower
 - What happens when restic is run and nothing left to backup?
 - done archive syncthing conflicts why?
+- somehow I am trying to do stuff to a tar file and its empty before I have appended a sha to the tar name???
 
 ## Selected
 
