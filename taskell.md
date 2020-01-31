@@ -12,6 +12,7 @@
     * [ ] syncthing
     * [ ] cpupower
 - What happens when restic is run and nothing left to backup?
+- done archive syncthing conflicts why?
 
 ## Selected
 
