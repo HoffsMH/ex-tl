@@ -1,6 +1,0 @@
-[Unit]
-Description=Tl
-
-[Service]
-ExecStart=$HOME/bin/tl start
-Restart=always
