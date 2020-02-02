@@ -20,6 +20,7 @@ defmodule Tl.Startx.Supervisor do
       worker(Tl.Cmd, ["/usr/bin/kitty", []], id: :kitty, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/google-chrome-stable", []], id: :chrome, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/brave", []], id: :brave, restart: :temporary),
+      worker(Tl.Cmd, ["/usr/bin/rescuetime", []], id: :rescuetime, restart: :temporary),
       # worker(Tl.Cmd, ["/usr/bin/slack", []], id: :slack, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/picom", []], id: :picom, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/pcloud", []], id: :pcloud_1, restart: :temporary),
