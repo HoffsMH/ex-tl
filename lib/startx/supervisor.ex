@@ -16,20 +16,20 @@ defmodule Tl.Startx.Supervisor do
   end
 
   def init(:ok) do
-    children = [
+    Supervisor.init(children(), strategy: :one_for_one)
+  end
+
+  def children() do
+    [
       %{
         id: :redshift,
         restart: :temporary,
         start: {Tl.Cmd, :start_link, ["/usr/bin/redshift", []]}
       },
-      %{
-        id: :sxhkd,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/sxhkd", []]}
-      },
-
-      worker(Tl.Cmd, ["/usr/bin/kitty", []], id: :kitty, restart: :temporary),
-      worker(Tl.Cmd, ["/usr/bin/google-chrome-stable", []], id: :chrome, restart: :temporary),
-      worker(Tl.Cmd, ["/usr/bin/brave", []], id: :brave, restart: :temporary),
+      %{id: :sxhkd, start: {Tl.Cmd, :start_link, ["/usr/bin/sxhkd", []]}},
+      %{id: :kitty, start: {Tl.Cmd, :start_link, ["/usr/bin/kitty", []]}, restart: :temporary},
+      %{id: :chrome, start: {Tl.Cmd, :start_link, ["/usr/bin/google-chrome-stable", []]}, restart: :temporary},
+      %{id: :brave, start: {Tl.Cmd, :start_link, ["/usr/bin/brave", []]}, restart: :temporary},
       worker(Tl.Cmd, ["/usr/bin/rescuetime", []], id: :rescuetime, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/slack", []], id: :slack, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/pcloud", []], id: :pcloud_1, restart: :temporary),
@@ -40,8 +40,6 @@ defmodule Tl.Startx.Supervisor do
         ]
       ])
     ] ++ machine_specific_workers()
-
-    Supervisor.init(children, strategy: :one_for_one)
   end
 
   def get_polybar_monitors() do
