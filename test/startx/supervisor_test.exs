@@ -9,9 +9,26 @@ defmodule Tl.Startx.SupervisorTest do
                start: {Tl.Cmd, :start_link, ["/usr/bin/redshift", []]}
              },
              %{id: :sxhkd, start: {Tl.Cmd, :start_link, ["/usr/bin/sxhkd", []]}},
-             %{id: :kitty, start: {Tl.Cmd, :start_link, ["/usr/bin/kitty", []]}, restart: :temporary},
-             %{id: :chrome, start: {Tl.Cmd, :start_link, ["/usr/bin/google-chrome-stable", []]}, restart: :temporary},
-             %{id: :brave, start: {Tl.Cmd, :start_link, ["/usr/bin/brave", []]}, restart: :temporary},
+             %{
+               id: :kitty,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/kitty", []]},
+               restart: :temporary
+             },
+             %{
+               id: :chrome,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/google-chrome-stable", []]},
+               restart: :temporary
+             },
+             %{
+               id: :brave,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/brave", []]},
+               restart: :temporary
+             },
+             %{
+               id: :xset,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/xset", ["r", "rate", "200", "30"]]},
+               restart: :temporary
+             },
              {:rescuetime, {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]}, :temporary, 5000,
               :worker, [Tl.Cmd]},
              {:slack, {Tl.Cmd, :start_link, ["/usr/bin/slack", []]}, :temporary, 5000, :worker,

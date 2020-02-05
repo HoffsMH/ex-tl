@@ -11,7 +11,6 @@ defmodule Tl.Startx.RunOnce do
 
     Tl.Cmd.exec(
       [
-        {"xset", ["r", "rate", "200", "30"]},
         {"/usr/bin/feh", ["--bg-scale", Path.expand("~/.wall.jpg")]},
         {"xcape", ["-t", "200", "-e", "Control_L=Escape"]}
       ] ++ config_cmds() ++ machine_specific_cmds()

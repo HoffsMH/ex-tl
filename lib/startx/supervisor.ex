@@ -28,8 +28,17 @@ defmodule Tl.Startx.Supervisor do
       },
       %{id: :sxhkd, start: {Tl.Cmd, :start_link, ["/usr/bin/sxhkd", []]}},
       %{id: :kitty, start: {Tl.Cmd, :start_link, ["/usr/bin/kitty", []]}, restart: :temporary},
-      %{id: :chrome, start: {Tl.Cmd, :start_link, ["/usr/bin/google-chrome-stable", []]}, restart: :temporary},
+      %{
+        id: :chrome,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/google-chrome-stable", []]},
+        restart: :temporary
+      },
       %{id: :brave, start: {Tl.Cmd, :start_link, ["/usr/bin/brave", []]}, restart: :temporary},
+      %{
+        id: :xset,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/xset", ["r", "rate", "200", "30"]]},
+        restart: :temporary
+      },
       worker(Tl.Cmd, ["/usr/bin/rescuetime", []], id: :rescuetime, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/slack", []], id: :slack, restart: :temporary),
       worker(Tl.Cmd, ["/usr/bin/pcloud", []], id: :pcloud_1, restart: :temporary),
