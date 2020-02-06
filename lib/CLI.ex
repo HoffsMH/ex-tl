@@ -48,6 +48,7 @@ defmodule Tl.CLI do
 
   def main(["cap"]) do
     {output, _} = System.cmd("xclip", ["-o"])
+    IO.inspect(output)
 
     Tl.File.append(cap_file(), "- " <> output)
   end

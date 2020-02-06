@@ -39,9 +39,21 @@ defmodule Tl.Startx.Supervisor do
         start: {Tl.Cmd, :start_link, ["/usr/bin/xset", ["r", "rate", "200", "30"]]},
         restart: :temporary
       },
-      worker(Tl.Cmd, ["/usr/bin/rescuetime", []], id: :rescuetime, restart: :temporary),
-      worker(Tl.Cmd, ["/usr/bin/slack", []], id: :slack, restart: :temporary),
-      worker(Tl.Cmd, ["/usr/bin/pcloud", []], id: :pcloud_1, restart: :temporary),
+      %{
+        id: :rescuetime,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]},
+        restart: :temporary
+      },
+      %{
+        id: :slack,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
+        restart: :temporary
+      },
+      %{
+        id: :pcloud,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
+        restart: :temporary
+      },
       worker(Tl.ClosedWatcher, [
         [
           fs_args: [dirs: [board()], name: :board_monitor],

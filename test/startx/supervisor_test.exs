@@ -29,12 +29,21 @@ defmodule Tl.Startx.SupervisorTest do
                start: {Tl.Cmd, :start_link, ["/usr/bin/xset", ["r", "rate", "200", "30"]]},
                restart: :temporary
              },
-             {:rescuetime, {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]}, :temporary, 5000,
-              :worker, [Tl.Cmd]},
-             {:slack, {Tl.Cmd, :start_link, ["/usr/bin/slack", []]}, :temporary, 5000, :worker,
-              [Tl.Cmd]},
-             {:pcloud_1, {Tl.Cmd, :start_link, ["/usr/bin/pcloud", []]}, :temporary, 5000,
-              :worker, [Tl.Cmd]},
+             %{
+               id: :rescuetime,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]},
+               restart: :temporary
+             },
+             %{
+               id: :slack,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
+               restart: :temporary
+             },
+             %{
+               id: :pcloud,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
+               restart: :temporary
+             },
              {Tl.ClosedWatcher,
               {Tl.ClosedWatcher, :start_link,
                [

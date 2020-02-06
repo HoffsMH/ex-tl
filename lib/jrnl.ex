@@ -1,4 +1,12 @@
 defmodule Tl.Jrnl do
+  def cmd() do
+    Application.get_env(:tl, :cmd_module, Tl.Cmd)
+  end
+
+  def file() do
+    Application.get_env(:tl, :file_module, File)
+  end
+
   def paths_config(key) do
     Application.get_env(:tl, :paths)[key]
   end
@@ -7,7 +15,6 @@ defmodule Tl.Jrnl do
     Application.get_env(:tl, :user)[key]
   end
 
-  def jrnl_dir, do: paths_config(:jrnl_dir)
   def jrnl_archive, do: paths_config(:jrnl_archive)
 
   def email, do: user_config(:gpg_email)
@@ -17,15 +24,16 @@ defmodule Tl.Jrnl do
   end
 
   def call(["lock"]) do
-    File.cd!(full_jrnl_path())
+    IO.puts("current dir is #{file.cwd!()}")
+    file.cd!(file.cwd!())
     tar_filename = jrnl_tar_filename()
-    System.cmd("tar", ["-cf", tar_filename | entry_list() |> Enum.map(&Path.basename/1)])
-    Tl.Cmd.exec("gpg", ["--encrypt", "--recipient", email(), tar_filename])
+    cmd.exec("tar", ["-cf", tar_filename | entry_list() |> Enum.map(&Path.basename/1)])
+    cmd.exec("gpg", ["--encrypt", "--recipient", email(), tar_filename])
 
     entry_list()
-    |> Enum.each(&File.rm!/1)
+    |> Enum.each(&file.rm!/1)
 
-    File.rm!(tar_filename)
+    file.rm!(tar_filename)
 
     archive_gpg()
   end
@@ -35,38 +43,40 @@ defmodule Tl.Jrnl do
   end
 
   def call(["unlock"]) do
-    IO.puts("current dir is #{File.cwd!()}")
-    File.cd!(full_jrnl_path())
+    IO.puts("current dir is #{file.cwd!()}")
+    file.cd!(file.cwd!())
     archive_gpg()
 
     sorted_gpg_list()
     |> Enum.each(fn gpg_file ->
-      Tl.Cmd.exec("gpg", ["--decrypt", "--use-embedded-filename", gpg_file])
-      File.rm!(gpg_file)
+      cmd.exec("gpg", ["--decrypt", "--use-embedded-filename", gpg_file])
+      file.rm!(gpg_file)
 
       tar_list()
       |> Enum.map(fn tar_file ->
-        Tl.Cmd.exec("tar", ["-xkvf", tar_file])
-        File.rm!(tar_file)
+        cmd.exec("tar", ["-xkvf", tar_file])
+        file.rm!(tar_file)
       end)
     end)
   end
 
   def call(["new", entry_name]) do
-    Tl.Cmd.exec("touch", [full_jrnl_path() <> "/#{entry_name}.md"])
-    Tl.Filename.call(["prepend", "datetime", full_jrnl_path() <> "/#{entry_name}.md"])
+    cmd.exec("touch", [Path.expand("./#{entry_name}.md")])
+    Tl.Filename.call(["prepend", "datetime", Path.expand("./#{entry_name}.md")])
   end
 
   def archive_gpg() do
     sorted_gpg_list
     |> Enum.each(fn filename ->
       filename
-      |> File.cp!(Path.expand(jrnl_archive() <> "/#{Path.basename(filename)}"))
+      |> file.cp!(Path.expand(jrnl_archive() <> "/#{Path.basename(filename)}"))
     end)
   end
 
   def sorted_gpg_list() do
-    Path.wildcard(full_jrnl_path() <> "/*.gpg")
+    "./*.gpg"
+    |> Path.expand()
+    |> Path.wildcard()
     |> Enum.sort_by(fn gpg_file ->
       gpg_file
       |> File.stat!(time: :posix)
@@ -76,15 +86,12 @@ defmodule Tl.Jrnl do
   end
 
   def tar_list() do
-    Path.wildcard(full_jrnl_path() <> "/*.tar")
+    Path.wildcard("./*.tar")
   end
 
   def entry_list() do
-    Path.wildcard(full_jrnl_path() <> "/*.{md,org}")
-  end
-
-  def full_jrnl_path() do
-    Path.expand(jrnl_dir())
+    Path.wildcard("./*.{md,org}")
+    |> Enum.map(&Path.expand/1)
   end
 
   def files_digest([]), do: ""

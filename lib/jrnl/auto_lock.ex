@@ -23,9 +23,14 @@ defmodule Tl.Jrnl.AutoLock do
     log("auto lock has found a file that has been opened #{minutes_ago} minutes ago")
 
     if minutes_ago < -20 do
-      log("deciding to lock")
-      Tl.Jrnl.call(["lock"])
+      autolock()
     end
+  end
+
+  def autolock() do
+    log("deciding to lock")
+    File.cd!(jrnl_dir())
+    Tl.Jrnl.call(["lock"])
   end
 
   def log(text) do
