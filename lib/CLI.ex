@@ -23,6 +23,7 @@ defmodule Tl.CLI do
       - new <name>
     - taskell
       - split
+      - archive-done
     """)
   end
 
