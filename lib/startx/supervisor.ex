@@ -51,7 +51,7 @@ defmodule Tl.Startx.Supervisor do
       },
       %{
         id: :pcloud,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
+        start: {Tl.Cmd, :start_link, ["/usr/bin/pcloud", []]},
         restart: :temporary
       },
       worker(Tl.ClosedWatcher, [
