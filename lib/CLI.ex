@@ -24,6 +24,7 @@ defmodule Tl.CLI do
     - taskell
       - split
       - archive-done
+    - bw
     """)
   end
 
@@ -62,4 +63,34 @@ defmodule Tl.CLI do
 
     Tl.File.append(cap_file(), "- " <> content)
   end
+
+  def main(["bw" | args ]) do
+    # call bw list
+    with {items_json, 0} <- System.cmd("bw", ["list", "items"]) do
+      items = items_json
+      |> Poison.decode!()
+      |> Enum.map(&item_to_fzf/1)
+      |> Enum.join("\n")
+
+      fzf = Port.open({:spawn, "fzf --no-preview"}, [:binary])
+      Port.command(fzf, items)
+
+      receive do
+        {^fzf, {:data, choice}} ->
+          id = choice
+          |> String.split("|")
+          |> Enum.at(2)
+
+          {pass, 0} = System.cmd("bw", ["get", "password", id])
+          IO.binwrite(:stdio, pass)
+      end
+    end
+
+  end
+
+  def item_to_fzf(%{"id" => id, "name" => name, "login" => %{ "username" => username }}) do
+    "#{name}|#{username}|#{id}"
+  end
+
+  def item_to_fzf(_), do: ""
 end
