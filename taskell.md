@@ -21,10 +21,7 @@
     * [ ] possibly split and the parsing inside
     * [ ] possibly startx
     * [ ] possibly jrnl
-- jrnl lock is no longer jrnl specific
-- jrnl lock is really buggy now that its been fixed lol
-- finish gettin
-- archive done exposed
+- remove the ctime and other sorting stuff
 
 ## Waiting on Something
 
@@ -35,3 +32,7 @@
 ## Done
 
 - cap from clipboard if no content is provided
+- prepend-full-iso to gpg files so that we can sort on filename rather than created_at because of how copying from jrnl-archive works
+- jrnl lock is no longer jrnl specific
+- archive done exposed
+- jrnl lock is really buggy now that its been fixed lol

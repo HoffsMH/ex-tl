@@ -31,7 +31,7 @@ defmodule Tl.Jrnl do
     IO.puts("current dir is #{file.cwd!()}")
     file.cd!(file.cwd!())
     tar_filename = jrnl_tar_filename()
-    cmd.exec("tar", ["-cf", tar_filename | entry_list() |> Enum.map(&path.basename/1)])
+    cmd.exec("tar", ["-cf", tar_filename | basename_entry_list() ++ ["--force-local"]])
     cmd.exec("gpg", ["--encrypt", "--recipient", email(), tar_filename])
 
     entry_list()
@@ -42,8 +42,13 @@ defmodule Tl.Jrnl do
     archive_gpg()
   end
 
+  def basename_entry_list() do
+    entry_list()
+    |> Enum.map(&path.basename/1)
+  end
+
   def jrnl_tar_filename() do
-    "#{Tl.Time.datestamp()}-#{files_digest(entry_list())}.tar"
+    "#{Tl.Time.iso()}-#{files_digest(entry_list())}.tar"
   end
 
   def call(["unlock"]) do
@@ -58,7 +63,7 @@ defmodule Tl.Jrnl do
 
       tar_list()
       |> Enum.map(fn tar_file ->
-        cmd.exec("tar", ["-xkvf", tar_file])
+        cmd.exec("tar", ["-xkvf", tar_file, "--force-local"])
         file.rm!(tar_file)
       end)
     end)
@@ -81,11 +86,7 @@ defmodule Tl.Jrnl do
     "./*.gpg"
     |> path.expand()
     |> path.wildcard()
-    |> Enum.sort_by(fn gpg_file ->
-      gpg_file
-      |> File.stat!(time: :posix)
-      |> Map.get(:ctime)
-    end)
+    |> Enum.sort()
     |> Enum.reverse()
   end
 
