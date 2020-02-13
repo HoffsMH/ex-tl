@@ -66,23 +66,26 @@ defmodule Tl.CLI do
 
   def main(["bw" | args ]) do
     # call bw list
-    with {items_json, 0} <- System.cmd("bw", ["list", "items"]) do
+    with {items_json, 0} <- System.cmd("bw", ["list", "items", "--search", "#{Enum.at(args, 0)}"]) do
       items = items_json
       |> Poison.decode!()
       |> Enum.map(&item_to_fzf/1)
       |> Enum.join("\n")
 
+
       fzf = Port.open({:spawn, "fzf --no-preview"}, [:binary])
-      Port.command(fzf, items)
+      Port.command(fzf, items <> "\n")
 
       receive do
-        {^fzf, {:data, choice}} ->
+        {_, {:data, choice}} ->
           id = choice
           |> String.split("|")
           |> Enum.at(2)
 
           {pass, 0} = System.cmd("bw", ["get", "password", id])
           IO.binwrite(:stdio, pass)
+        _ ->
+          IO.puts "error"
       end
     end
 
