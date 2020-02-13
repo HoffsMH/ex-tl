@@ -6,7 +6,6 @@
     > 
     * [ ] - https://gist.github.com/ck3g/faa5df7c9b380430c5a192115806f341
 
-
 ## Warm
 
 - investigate what would be needed to get syncthing into TL and whether or not it would be worth it
@@ -26,7 +25,7 @@
     * [ ] possibly split and the parsing inside
     * [ ] possibly startx
     * [ ] possibly jrnl
-- remove the ctime and other sorting stuff
+- options to peel off most recent from jrnl archive into current directory
 
 ## Waiting on Something
 
@@ -41,3 +40,4 @@
 - jrnl lock is no longer jrnl specific
 - archive done exposed
 - jrnl lock is really buggy now that its been fixed lol
+- remove the ctime and other sorting stuff
