@@ -82,7 +82,11 @@ defmodule Tl.CLI do
           |> String.split("|")
           |> Enum.at(2)
 
-          {pass, 0} = System.cmd("bw", ["get", "password", id])
+          pass = items_json
+          |> Poison.decode!()
+          |> Enum.find(&get_password/1)
+          |> get_password()
+
           IO.binwrite(:stdio, pass)
         _ ->
           IO.puts "error"
@@ -96,4 +100,6 @@ defmodule Tl.CLI do
   end
 
   def item_to_fzf(_), do: ""
+
+  def get_password(%{"login" => %{ "password" => password}}), do: password
 end
