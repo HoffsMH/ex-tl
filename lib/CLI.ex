@@ -81,10 +81,11 @@ defmodule Tl.CLI do
           id = choice
           |> String.split("|")
           |> Enum.at(2)
+          |> String.trim
 
           pass = items_json
           |> Poison.decode!()
-          |> Enum.find(&get_password/1)
+          |> Enum.find(&(get_id(&1) === id))
           |> get_password()
 
           IO.binwrite(:stdio, pass)
@@ -102,4 +103,5 @@ defmodule Tl.CLI do
   def item_to_fzf(_), do: ""
 
   def get_password(%{"login" => %{ "password" => password}}), do: password
+  def get_id(%{"id" => id}), do: id
 end
