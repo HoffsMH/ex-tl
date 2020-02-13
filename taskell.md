@@ -1,6 +1,11 @@
 ## Cold
 
 - jrnl functionality to assist in mass unlocking and locking in order to rotate keys
+- read in from stdio
+    > - https://gist.github.com/ck3g/faa5df7c9b380430c5a192115806f341
+    > 
+    * [ ] - https://gist.github.com/ck3g/faa5df7c9b380430c5a192115806f341
+
 
 ## Warm
 
