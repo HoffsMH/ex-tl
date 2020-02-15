@@ -22,13 +22,7 @@ config :tl, :paths,
 # where we store our monthly log files
 config :tl, :cmd, logfile_dir: "~/.tl/"
 
-config :tl, :taskell_columns, %{
-  "Warm" => "~/personal/00-capture/warm.md",
-  "Selected" => "~/personal/00-capture/selected.md",
-  "Waiting on something" => "~/personal/00-capture/waiting-on.md",
-  "Today" => "~/personal/00-capture/today.md",
-  "Doing" => "~/personal/00-capture/doing.md"
-}
+config :tl, :taskell_split_dir, "~/personal/00-capture"
 
 config :tl, :run_once, []
 

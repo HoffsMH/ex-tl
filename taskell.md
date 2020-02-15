@@ -22,6 +22,7 @@
 - makes a scratch new capture file for a given topic and opens subl to that file
 - remove the runonce module and fold into supervisor
 - conky setup to tl
+- thing to remove syncthing conflicts on files that I know are append only
 
 ## Selected
 

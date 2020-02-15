@@ -5,24 +5,25 @@ defmodule Tl.Taskell.SplitColumns do
     |> Path.expand()
   end
 
+  def dir(), do: Application.get_env(:tl, :taskell_split_dir)
+
   def columns(), do: Application.get_env(:tl, :taskell_columns)
 
   def call(_args), do: call()
 
   def call() do
-    with {:ok, board_file} <- File.open(board(), [:read]),
-         content <- IO.binread(board_file, :all) do
-      File.close(board_file)
-      log("successfully opened  and closed #{board()}")
+    with content <- board_content() do
+      parsed_board()
+      |> Enum.map(fn %{value: value, content: content} ->
+        column_path = value
+        |> column_filename()
+        |> Path.expand(dir)
 
-      columns()
-      |> Enum.map(fn {column_name, column_path} ->
-        new_content =
-          get_heading_content(column_name, content)
-          |> Enum.reverse()
-          |> Enum.join("\n")
+        new_content = content
+        |> Enum.reverse()
+        |> Enum.join("\n")
 
-        {:ok, file} = File.open(Path.expand(column_path), [:write])
+        {:ok, file} = File.open(column_path, [:write])
         IO.binwrite(file, new_content)
         File.close(file)
         log("successfully wrote to #{column_path} : #{new_content}")
@@ -34,10 +35,25 @@ defmodule Tl.Taskell.SplitColumns do
     Tl.log("split_columns", text)
   end
 
-  def get_heading_content(heading, content) do
-    content
+  def board_content(), do: board_content(board())
+  def board_content(board_filename) do
+    with {:ok, board_file} <- File.open(board(), [:read]),
+         content <- IO.binread(board_file, :all) do
+      File.close(board_file)
+      log("successfully opened  and closed #{board()}")
+      content
+    end
+  end
+
+  def parsed_board() do
+    board_content()
     |> Tl.Parser.parse()
-    |> Enum.find(&(Map.get(&1, :value) == "## #{heading}"))
-    |> Map.get(:content)
+  end
+
+  def column_filename(value) do
+    name = value
+    |> String.replace("## ", "")
+    |> String.downcase()
+    name <> ".md"
   end
 end
