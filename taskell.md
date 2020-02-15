@@ -5,6 +5,7 @@
     > - https://gist.github.com/ck3g/faa5df7c9b380430c5a192115806f341
     > 
     * [ ] - https://gist.github.com/ck3g/faa5df7c9b380430c5a192115806f341
+- add system bootstrap itself to tl
 
 ## Warm
 
@@ -18,7 +19,12 @@
 - What happens when restic is run and nothing left to backup?
 - done archive syncthing conflicts why?
 - somehow I am trying to do stuff to a tar file and its empty before I have appended a sha to the tar name???
+<<<<<<< HEAD
 - makes a scratch new capture file for a given topic and opens subl to that file
+=======
+- remove the runonce module and fold into supervisor
+- conky setup to tl
+>>>>>>> more tasks
 
 ## Selected
 
