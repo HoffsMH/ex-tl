@@ -37,6 +37,7 @@
 
 ## Doing
 
+- make jrnl archive read dirname and put in sub folder of jrnlarchive
 
 ## Done
 
