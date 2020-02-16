@@ -8,7 +8,6 @@
 - add system bootstrap itself to tl
 - https://stackoverflow.com/questions/32085258/how-can-i-schedule-code-to-run-every-few-hours-in-elixir-or-phoenix-framework/38778117
 
-
 ## Warm
 
 - investigate what would be needed to get syncthing into TL and whether or not it would be worth it
@@ -40,6 +39,7 @@
 ## Doing
 
 - make jrnl archive read dirname and put in sub folder of jrnlarchive
+- ensure that repeating jobs DONOT start when running cli commands
 
 ## Done
 
