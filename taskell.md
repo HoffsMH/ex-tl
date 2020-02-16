@@ -6,6 +6,8 @@
     > 
     * [ ] - https://gist.github.com/ck3g/faa5df7c9b380430c5a192115806f341
 - add system bootstrap itself to tl
+- https://stackoverflow.com/questions/32085258/how-can-i-schedule-code-to-run-every-few-hours-in-elixir-or-phoenix-framework/38778117
+
 
 ## Warm
 
