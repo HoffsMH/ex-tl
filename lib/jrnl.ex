@@ -27,6 +27,13 @@ defmodule Tl.Jrnl do
     Application.get_env(:tl, Tl.Jrnl)
   end
 
+  def call(["refresh"]) do
+    filename = sorted_archived_gpg_list()
+    |> Enum.at(0)
+
+    file.cp!(filename, "#{file.cwd!()}/#{path.basename(filename)}")
+  end
+
   def call(["lock"]) do
     IO.puts("current dir is #{file.cwd!()}")
     file.cd!(file.cwd!())
@@ -75,16 +82,36 @@ defmodule Tl.Jrnl do
   end
 
   def archive_gpg() do
+   File.mkdir(complete_jrnl_archive())
+
     sorted_gpg_list
     |> Enum.each(fn filename ->
       filename
-      |> file.cp!(path.expand(jrnl_archive() <> "/#{path.basename(filename)}"))
+      |> file.cp!(path.expand(jrnl_archive() <> "/#{jrnl_name()}/#{path.basename(filename)}"))
     end)
   end
 
   def sorted_gpg_list() do
     "./*.gpg"
     |> path.expand()
+    |> path.wildcard()
+    |> Enum.sort()
+    |> Enum.reverse()
+  end
+
+  def jrnl_name() do
+    jrnl_name = file.cwd!()
+    |> String.split("/")
+    |> Enum.reverse()
+    |> Enum.at(0)
+  end
+
+  def complete_jrnl_archive() do
+    path.expand(jrnl_archive() <> "/#{jrnl_name()}")
+  end
+
+  def sorted_archived_gpg_list() do
+    "#{complete_jrnl_archive()}/*.gpg"
     |> path.wildcard()
     |> Enum.sort()
     |> Enum.reverse()
