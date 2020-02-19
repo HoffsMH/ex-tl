@@ -29,6 +29,7 @@
     * [ ] possibly jrnl
 - done archive syncthing conflicts why?
 - remove the runonce module and fold into supervisor
+- put refresh in other tasks in right spot
 
 ## Waiting on Something
 
