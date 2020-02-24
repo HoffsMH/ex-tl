@@ -54,6 +54,18 @@ defmodule Tl.Startx.Supervisor do
         start: {Tl.Cmd, :start_link, ["/usr/bin/pcloud", []]},
         restart: :temporary
       },
+
+      %{
+        id: :xcape,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
+        restart: :temporary
+      },
+
+      %{
+        id: :feh,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/feh", ["--bg-scale", Path.expand("~/.wall.jpg")]]},
+        restart: :temporary
+      },
       worker(Tl.ClosedWatcher, [
         [
           fs_args: [dirs: [board()], name: :board_monitor],

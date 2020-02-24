@@ -28,7 +28,6 @@
     * [ ] possibly startx
     * [ ] possibly jrnl
 - done archive syncthing conflicts why?
-- remove the runonce module and fold into supervisor
 - put refresh in other tasks in right spot
 
 ## Waiting on Something
@@ -49,3 +48,4 @@
 - ensure that repeating jobs DONOT start when running cli commands
 - options to peel off most recent from jrnl archive into current directory
 - add the ability to copy a ## heading and its content and automatically create a new md file that is named appropriately
+- remove the runonce module and fold into supervisor

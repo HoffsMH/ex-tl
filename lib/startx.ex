@@ -3,7 +3,6 @@ defmodule Tl.Startx do
 
   def call() do
     log("startx.call has been called!")
-    Tl.Startx.RunOnce.call()
 
     Tl.Startx.Supervisor.start_link(name: Tl.Startx.Supervisor)
 

@@ -1,6 +1,2 @@
 use Mix.Config
 
-config :tl, :machine_specific_run_once,
-  [
-    {"/usr/bin/kitty", []},
-  ]
