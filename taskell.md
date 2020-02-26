@@ -29,6 +29,7 @@
     * [ ] possibly jrnl
 - done archive syncthing conflicts why?
 - put refresh in other tasks in right spot
+- some way of clearing out old gpg files in jrnl folder
 
 ## Waiting on Something
 
