@@ -30,6 +30,7 @@
 - done archive syncthing conflicts why?
 - put refresh in other tasks in right spot
 - some way of clearing out old gpg files in jrnl folder
+    > seems like it naturaly clears?
 
 ## Waiting on Something
 
