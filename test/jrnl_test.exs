@@ -25,6 +25,7 @@ defmodule Tl.JrnlTest do
 
     result = Tl.Jrnl.call(["lock"])
 
-    require IEx; IEx.pry
+    require IEx
+    IEx.pry()
   end
 end

@@ -66,6 +66,13 @@ defmodule Tl.Startx.Supervisor do
         start: {Tl.Cmd, :start_link, ["/usr/bin/feh", ["--bg-scale", Path.expand("~/.wall.jpg")]]},
         restart: :temporary
       },
+
+      %{
+        id: :greenclip,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/greenclip", ["daemon"]]},
+        restart: :temporary
+      },
+
       worker(Tl.ClosedWatcher, [
         [
           fs_args: [dirs: [board()], name: :board_monitor],
