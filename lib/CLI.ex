@@ -64,44 +64,46 @@ defmodule Tl.CLI do
     Tl.File.append(cap_file(), "- " <> content)
   end
 
-  def main(["bw" | args ]) do
+  def main(["bw" | args]) do
     # call bw list
     with {items_json, 0} <- System.cmd("bw", ["list", "items", "--search", "#{Enum.at(args, 0)}"]) do
-      items = items_json
-      |> Poison.decode!()
-      |> Enum.map(&item_to_fzf/1)
-      |> Enum.join("\n")
-
+      items =
+        items_json
+        |> Poison.decode!()
+        |> Enum.map(&item_to_fzf/1)
+        |> Enum.join("\n")
 
       fzf = Port.open({:spawn, "fzf --no-preview"}, [:binary])
       Port.command(fzf, items <> "\n")
 
       receive do
         {_, {:data, choice}} ->
-          id = choice
-          |> String.split("|")
-          |> Enum.at(2)
-          |> String.trim
+          id =
+            choice
+            |> String.split("|")
+            |> Enum.at(2)
+            |> String.trim()
 
-          pass = items_json
-          |> Poison.decode!()
-          |> Enum.find(&(get_id(&1) === id))
-          |> get_password()
+          pass =
+            items_json
+            |> Poison.decode!()
+            |> Enum.find(&(get_id(&1) === id))
+            |> get_password()
 
           IO.binwrite(:stdio, pass)
+
         _ ->
-          IO.puts "error"
+          IO.puts("error")
       end
     end
-
   end
 
-  def item_to_fzf(%{"id" => id, "name" => name, "login" => %{ "username" => username }}) do
+  def item_to_fzf(%{"id" => id, "name" => name, "login" => %{"username" => username}}) do
     "#{name}|#{username}|#{id}"
   end
 
   def item_to_fzf(_), do: ""
 
-  def get_password(%{"login" => %{ "password" => password}}), do: password
+  def get_password(%{"login" => %{"password" => password}}), do: password
   def get_id(%{"id" => id}), do: id
 end

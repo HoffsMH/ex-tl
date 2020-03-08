@@ -15,13 +15,15 @@ defmodule Tl.Taskell.SplitColumns do
     with content <- board_content() do
       parsed_board()
       |> Enum.map(fn %{value: value, content: content} ->
-        column_path = value
-        |> column_filename()
-        |> Path.expand(dir)
+        column_path =
+          value
+          |> column_filename()
+          |> Path.expand(dir)
 
-        new_content = content
-        |> Enum.reverse()
-        |> Enum.join("\n")
+        new_content =
+          content
+          |> Enum.reverse()
+          |> Enum.join("\n")
 
         {:ok, file} = File.open(column_path, [:write])
         IO.binwrite(file, new_content)
@@ -36,6 +38,7 @@ defmodule Tl.Taskell.SplitColumns do
   end
 
   def board_content(), do: board_content(board())
+
   def board_content(board_filename) do
     with {:ok, board_file} <- File.open(board(), [:read]),
          content <- IO.binread(board_file, :all) do
@@ -51,9 +54,11 @@ defmodule Tl.Taskell.SplitColumns do
   end
 
   def column_filename(value) do
-    name = value
-    |> String.replace("## ", "")
-    |> String.downcase()
+    name =
+      value
+      |> String.replace("## ", "")
+      |> String.downcase()
+
     name <> ".md"
   end
 end

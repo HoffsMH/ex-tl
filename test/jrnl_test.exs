@@ -18,7 +18,6 @@ end
 defmodule Tl.JrnlTest do
   use ExUnit.Case
 
-
   test "#lock" do
     Application.put_env(:tl, :cmd_module, Tl.MockCmd)
     Application.put_env(:tl, :file_module, MockFile)

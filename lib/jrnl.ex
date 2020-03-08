@@ -28,8 +28,9 @@ defmodule Tl.Jrnl do
   end
 
   def call(["refresh"]) do
-    filename = sorted_archived_gpg_list()
-    |> Enum.at(0)
+    filename =
+      sorted_archived_gpg_list()
+      |> Enum.at(0)
 
     file.cp!(filename, "#{file.cwd!()}/#{path.basename(filename)}")
   end
@@ -82,7 +83,7 @@ defmodule Tl.Jrnl do
   end
 
   def archive_gpg() do
-   File.mkdir(complete_jrnl_archive())
+    File.mkdir(complete_jrnl_archive())
 
     sorted_gpg_list
     |> Enum.each(fn filename ->
@@ -100,10 +101,11 @@ defmodule Tl.Jrnl do
   end
 
   def jrnl_name() do
-    jrnl_name = file.cwd!()
-    |> String.split("/")
-    |> Enum.reverse()
-    |> Enum.at(0)
+    jrnl_name =
+      file.cwd!()
+      |> String.split("/")
+      |> Enum.reverse()
+      |> Enum.at(0)
   end
 
   def complete_jrnl_archive() do
