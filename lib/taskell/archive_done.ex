@@ -38,7 +38,9 @@ defmodule Tl.Taskell.ArchiveDone do
         acc <> Tl.Heading.to_string(column)
       end)
 
+    log("about to File.Write! content to board: #{new_content}")
     File.write!(board(), new_content)
+    log("reading content of board now: #{File.read!(board())}")
 
     timestamp = Time.to_iso8601(Time.utc_now())
 
@@ -76,5 +78,9 @@ defmodule Tl.Taskell.ArchiveDone do
 
   def get_file_entry() do
     File.read!(board())
+  end
+
+  def log(text) do
+    Tl.log("archive_done", text)
   end
 end
