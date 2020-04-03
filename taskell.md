@@ -31,6 +31,8 @@
 - put refresh in other tasks in right spot
 - some way of clearing out old gpg files in jrnl folder
     > seems like it naturaly clears?
+- tl new cap
+    > this thing creates a new capture file that can be later folded into the main capture file. The reason for this is that I want to be able to write stuff independant of private stuff that might be my main capture file. I guess another thing is needed something like tl cap merge
 
 ## Waiting on Something
 
