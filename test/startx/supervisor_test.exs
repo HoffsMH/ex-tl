@@ -5,44 +5,33 @@ defmodule Tl.Startx.SupervisorTest do
     assert Tl.Startx.Supervisor.children() == [
              %{
                id: :redshift,
-               restart: :temporary,
                start: {Tl.Cmd, :start_link, ["/usr/bin/redshift", []]}
              },
              %{id: :sxhkd, start: {Tl.Cmd, :start_link, ["/usr/bin/sxhkd", []]}},
              %{
-               id: :kitty,
-               start: {Tl.Cmd, :start_link, ["/usr/bin/kitty", []]},
-               restart: :temporary
-             },
-             %{
-               id: :chrome,
-               start: {Tl.Cmd, :start_link, ["/usr/bin/google-chrome-stable", []]},
-               restart: :temporary
-             },
-             %{
-               id: :brave,
-               start: {Tl.Cmd, :start_link, ["/usr/bin/brave", []]},
-               restart: :temporary
-             },
-             %{
                id: :xset,
                start: {Tl.Cmd, :start_link, ["/usr/bin/xset", ["r", "rate", "200", "30"]]},
-               restart: :temporary
+               restart: :transient
              },
              %{
                id: :rescuetime,
-               start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]},
-               restart: :temporary
-             },
-             %{
-               id: :slack,
-               start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
-               restart: :temporary
+               start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]}
              },
              %{
                id: :pcloud,
-               start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
-               restart: :temporary
+               start: {Tl.Cmd, :start_link, ["/usr/bin/pcloud", []]}
+             },
+             %{
+               id: :xcape,
+               start:
+                 {Tl.Cmd, :start_link,
+                  ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
+               restart: :transient
+             },
+             %{
+               id: :greenclip,
+               start: {Tl.Cmd, :start_link, ["/usr/bin/greenclip", ["daemon"]]},
+               restart: :transient
              },
              {Tl.ClosedWatcher,
               {Tl.ClosedWatcher, :start_link,
@@ -54,7 +43,8 @@ defmodule Tl.Startx.SupervisorTest do
                    ],
                    call_mod: Tl.Taskell.SplitColumns
                  ]
-               ]}, :permanent, 5000, :worker, [Tl.ClosedWatcher]}
+               ]}, :permanent, 5000, :worker, [Tl.ClosedWatcher]},
+             Tl.Scheduler
            ]
   end
 end

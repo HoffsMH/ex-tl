@@ -1,23 +1,18 @@
 defmodule Tl.Jrnl do
-  def cmd() do
-    Application.get_env(:tl, :cmd_module, Tl.Cmd)
-  end
+  def cmd(),
+    do: Application.get_env(:tl, :cmd_module, Tl.Cmd)
 
-  def file() do
-    Application.get_env(:tl, :file_module, File)
-  end
+  def file(),
+    do: Application.get_env(:tl, :file_module, File)
 
-  def path() do
-    Application.get_env(:tl, :path_module, Path)
-  end
+  def path(),
+    do: Application.get_env(:tl, :path_module, Path)
 
-  def paths_config(key) do
-    Application.get_env(:tl, :paths)[key]
-  end
+  def paths_config(key),
+    do: Application.get_env(:tl, :paths)[key]
 
-  def user_config(key) do
-    Application.get_env(:tl, :user)[key]
-  end
+  def user_config(key),
+    do: Application.get_env(:tl, :user)[key]
 
   def jrnl_archive, do: paths_config(:jrnl_archive)
 

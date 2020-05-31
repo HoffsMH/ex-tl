@@ -24,7 +24,6 @@ config :tl, :cmd, logfile_dir: "~/.tl/"
 
 config :tl, :taskell_split_dir, "~/personal/00-capture"
 
-
 if File.regular?("./config/machine_specific.exs") do
   IO.puts("found machine specific config")
   import_config "machine_specific.exs"

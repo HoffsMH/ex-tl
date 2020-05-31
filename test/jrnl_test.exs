@@ -24,8 +24,5 @@ defmodule Tl.JrnlTest do
     Application.put_env(:tl, :path_module, MockPath)
 
     result = Tl.Jrnl.call(["lock"])
-
-    require IEx
-    IEx.pry()
   end
 end

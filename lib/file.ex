@@ -33,4 +33,19 @@ defmodule Tl.File do
     IO.write(file, "\n" <> content)
     File.close(file)
   end
+
+  def overwrite(filename, content) do
+    with {:ok, file} <- File.open(Path.expand(filename), [:write]) do
+      IO.binwrite(file, content)
+      File.close(file)
+    end
+  end
+
+  def read(filename) do
+    with {:ok, file} <- File.open(Path.expand(filename), [:read]),
+         content <- IO.binread(file, :all) do
+      File.close(file)
+      content
+    end
+  end
 end

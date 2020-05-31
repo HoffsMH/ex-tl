@@ -8,9 +8,13 @@ defmodule Tl.MixProject do
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      escript: escript()
+      escript: escript(),
+      elixirc_paths: compiler_paths(Mix.env())
     ]
   end
+
+  def compiler_paths(:test), do: ["test/support"] ++ compiler_paths(:prod)
+  def compiler_paths(_), do: ["lib"]
 
   # Run "mix help compile.app" to learn about applications.
   def application do

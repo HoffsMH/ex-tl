@@ -23,56 +23,32 @@ defmodule Tl.Startx.Supervisor do
     [
       %{
         id: :redshift,
-        restart: :temporary,
         start: {Tl.Cmd, :start_link, ["/usr/bin/redshift", []]}
       },
       %{id: :sxhkd, start: {Tl.Cmd, :start_link, ["/usr/bin/sxhkd", []]}},
-      %{id: :kitty, start: {Tl.Cmd, :start_link, ["/usr/bin/kitty", []]}, restart: :temporary},
-      %{
-        id: :chrome,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/google-chrome-stable", []]},
-        restart: :temporary
-      },
-      %{id: :brave, start: {Tl.Cmd, :start_link, ["/usr/bin/brave", []]}, restart: :temporary},
       %{
         id: :xset,
         start: {Tl.Cmd, :start_link, ["/usr/bin/xset", ["r", "rate", "200", "30"]]},
-        restart: :temporary
+        restart: :transient
       },
       %{
         id: :rescuetime,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]},
-        restart: :temporary
-      },
-      %{
-        id: :slack,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/slack", []]},
-        restart: :temporary
+        start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]}
       },
       %{
         id: :pcloud,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/pcloud", []]},
-        restart: :temporary
+        start: {Tl.Cmd, :start_link, ["/usr/bin/pcloud", []]}
       },
-
       %{
         id: :xcape,
         start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
-        restart: :temporary
+        restart: :transient
       },
-
-      %{
-        id: :feh,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/feh", ["--bg-scale", Path.expand("~/.wall.jpg")]]},
-        restart: :temporary
-      },
-
       %{
         id: :greenclip,
         start: {Tl.Cmd, :start_link, ["/usr/bin/greenclip", ["daemon"]]},
-        restart: :temporary
+        restart: :transient
       },
-
       worker(Tl.ClosedWatcher, [
         [
           fs_args: [dirs: [board()], name: :board_monitor],
