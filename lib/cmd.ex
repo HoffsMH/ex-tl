@@ -28,6 +28,11 @@ defmodule Tl.Cmd do
       when is_binary(cmd),
       do: exec(cmd, [])
 
+  def start(cmd), do: start(cmd, [])
+  def start(cmd, args) do
+    spawn_link(__MODULE__, :exec, [cmd, args])
+  end
+
   def exec(cmd, args) do
     log("attempting cmd: #{cmd}")
     {output, exit_code} = System.cmd(cmd, args)

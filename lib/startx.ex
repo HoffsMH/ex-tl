@@ -6,11 +6,10 @@ defmodule Tl.Startx do
 
     log("run once")
 
-    Tl.Cmd.exec("/usr/bin/kitty")
-    Tl.Cmd.exec("/usr/bin/brave")
-    Tl.Cmd.exec("/usr/bin/slack")
-    Tl.Cmd.exec("/usr/bin/google-chrome-stable")
-    Tl.Cmd.exec("/usr/bin/brave")
+    Tl.Cmd.start("/usr/bin/kitty")
+    Tl.Cmd.start("/usr/bin/brave")
+    Tl.Cmd.start("/usr/bin/slack")
+    Tl.Cmd.start("/usr/bin/google-chrome-stable")
     Tl.Cmd.exec("/usr/bin/feh", ["--bg-scale", Path.expand("~/.wall.jpg")])
 
     log("starting long running commands")
