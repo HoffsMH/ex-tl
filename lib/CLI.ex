@@ -21,6 +21,7 @@ defmodule Tl.CLI do
       - lock
       - unlock
       - new <name>
+      - refresh
     - taskell
       - split
       - archive-done
