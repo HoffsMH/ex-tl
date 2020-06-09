@@ -8,8 +8,6 @@ defmodule Tl.Taskell.SplitColumns do
 
   def dir(), do: Application.get_env(:tl, :taskell_split_dir)
 
-  def columns(), do: Application.get_env(:tl, :taskell_columns)
-
   def call(_args), do: call()
 
   def call() do
@@ -46,6 +44,6 @@ defmodule Tl.Taskell.SplitColumns do
       |> String.replace("## ", "")
       |> String.downcase()
 
-    name <> ".md"
+    Path.expand(name <> ".md", dir)
   end
 end
