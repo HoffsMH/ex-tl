@@ -44,16 +44,24 @@ defmodule Tl.Taskell.ArchiveDone do
 
     timestamp = Time.to_iso8601(Time.utc_now())
 
-    header = gen_header()
-
     content = Tl.Heading.to_string(done)
 
-    if content != "\n## Done" do
+
+    archive? = done.content
+    |> Enum.reject(&(String.trim(&1) == ""))
+    |> Enum.any?
+
+
+    if should_archive?(done) do
       Tl.File.prepend(
         done_archive(),
-        header <> Tl.Heading.to_string(done)
+        gen_header() <> Tl.Heading.to_string(done)
       )
     end
+  end
+
+  def should_archive?(done) do
+    Tl.Heading.any_content?(done)
   end
 
   def gen_header() do

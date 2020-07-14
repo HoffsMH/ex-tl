@@ -37,6 +37,12 @@ defmodule Tl.Heading do
     concat_content(lines, output <> "\n#{line}")
   end
 
+  def any_content?(%{content: content}) do
+    content
+    |> Enum.reject(&(String.trim(&1) == ""))
+    |> Enum.any?
+  end
+
   def value(%{value: value}) do
     value
   end
