@@ -49,6 +49,23 @@ defmodule Tl.Startx.Supervisor do
         start: {Tl.Cmd, :start_link, ["/usr/bin/greenclip", ["daemon"]]},
         restart: :transient
       },
+      %{
+        id: :restic_backup,
+        start:
+          {Tl.Cmd, :start_link,
+           [
+             "/usr/bin/restic",
+             [
+               "backup",
+               "--verbose",
+               "--tag",
+               "systemd.timer",
+               "--exclude-file=/home/hoffs/.restic_excludes",
+               "/home/hoffs/"
+             ]
+           ]},
+        restart: :temporary
+      },
       worker(Tl.ClosedWatcher, [
         [
           fs_args: [dirs: [board()], name: :board_monitor],

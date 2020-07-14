@@ -29,6 +29,7 @@ defmodule Tl.Cmd do
       do: exec(cmd, [])
 
   def start(cmd), do: start(cmd, [])
+
   def start(cmd, args) do
     spawn_link(__MODULE__, :exec, [cmd, args])
   end
