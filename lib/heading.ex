@@ -17,6 +17,10 @@ defmodule Tl.Heading do
     "#{ensure_formatting(value)}#{concat_content(Enum.reverse(content))}"
   end
 
+  def to_string_content_only(%{content: content}) do
+    "#{concat_content(Enum.reverse(content))}"
+  end
+
   def trim_value(%{value: value}) do
     trim_value(value)
   end

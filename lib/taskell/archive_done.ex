@@ -55,7 +55,7 @@ defmodule Tl.Taskell.ArchiveDone do
     if should_archive?(done) do
       Tl.File.prepend(
         done_archive(),
-        gen_header() <> Tl.Heading.to_string(done)
+        gen_header() <> Tl.Heading.to_string_content_only(done)
       )
     end
   end
