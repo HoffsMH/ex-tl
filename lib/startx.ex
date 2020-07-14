@@ -22,6 +22,6 @@ defmodule Tl.Startx do
   end
 
   def log(text) do
-    Tl.File.append(Path.expand("~/.tl/2020-01.log"), text)
+    Tl.log("startx", text)
   end
 end
