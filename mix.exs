@@ -25,7 +25,7 @@ defmodule Tl.MixProject do
   end
 
   defp escript do
-    [main_module: Tl.CLI]
+    [main_module: Tl.CLI, emu_args: ["-name foo@bar -setcookie baz"]]
   end
 
   # Run "mix help deps" to learn about dependencies.

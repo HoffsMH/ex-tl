@@ -7,7 +7,7 @@
     * [ ] - https://gist.github.com/ck3g/faa5df7c9b380430c5a192115806f341
 - https://stackoverflow.com/questions/32085258/how-can-i-schedule-code-to-run-every-few-hours-in-elixir-or-phoenix-framework/38778117
 - randomly create a puzzle game
-- generalized ability to get date from command line
+- generalized ability to get date from command line for piping into other things
 - refactor bw into its own module
 
 ## Warm
@@ -29,6 +29,9 @@
 - put refresh in other tasks in right spot
 - tl new cap
     > this thing creates a new capture file that can be later folded into the main capture file. The reason for this is that I want to be able to write stuff independant of private stuff that might be my main capture file. I guess another thing is needed something like tl cap merge
+    * [ ] maybe  its more of a category creation maybe category creation is  a list of categories in a category file and each entry is a folder with a capture file inside and  I can basically run tl cap with a prefixed category somehow to file it away in that category.
+    * [ ] 
+    * [ ] 
 
 ## Waiting on Something
 
