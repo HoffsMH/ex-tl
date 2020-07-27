@@ -44,7 +44,7 @@ defmodule Tl.Heading do
   def any_content?(%{content: content}) do
     content
     |> Enum.reject(&(String.trim(&1) == ""))
-    |> Enum.any?
+    |> Enum.any?()
   end
 
   def value(%{value: value}) do

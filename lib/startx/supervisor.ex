@@ -51,7 +51,12 @@ defmodule Tl.Startx.Supervisor do
       },
       %{
         id: :polybar,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/polybar", ["-c", Path.expand("~/.config/polybar/config/polybarconfig"), "main"]]},
+        start:
+          {Tl.Cmd, :start_link,
+           [
+             "/usr/bin/polybar",
+             ["-c", Path.expand("~/.config/polybar/config/polybarconfig"), "main"]
+           ]},
         restart: :transient
       },
       %{

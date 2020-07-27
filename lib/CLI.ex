@@ -7,7 +7,7 @@ defmodule Tl.CLI do
   def main([]), do: main(["help"])
 
   def main(["rep"]) do
-    IO.inspect Node.self
+    IO.inspect(Node.self())
   end
 
   def main(["help"]) do

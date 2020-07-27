@@ -3,8 +3,8 @@ defmodule Tl.FontPatch do
 
   def unpatched_fonts do
     unpatched_dir
-   |> file.ls!()
-   |> Enum.map(&Path.expand(&1, unpatched_dir))
+    |> file.ls!()
+    |> Enum.map(&Path.expand(&1, unpatched_dir))
   end
 
   def font_patcher do
@@ -33,13 +33,17 @@ defmodule Tl.FontPatch do
   end
 
   def patch_font(font_path) do
-    System.cmd(font_patcher, [font_path, "-c", "--careful", "--out", intermediate_path ])
+    System.cmd(font_patcher, [font_path, "-c", "--careful", "--out", intermediate_path])
 
-    with outfile <- List.first(File.ls!(intermediate_path))do
-      File.rename(Path.expand(outfile, intermediate_path), out_path <> "/" <> Path.basename(font_path))
-    else err ->
-      require IEx
-      IEx.pry
+    with outfile <- List.first(File.ls!(intermediate_path)) do
+      File.rename(
+        Path.expand(outfile, intermediate_path),
+        out_path <> "/" <> Path.basename(font_path)
+      )
+    else
+      err ->
+        require IEx
+        IEx.pry()
     end
   end
 end

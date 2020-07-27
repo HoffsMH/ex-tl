@@ -46,11 +46,10 @@ defmodule Tl.Taskell.ArchiveDone do
 
     content = Tl.Heading.to_string(done)
 
-
-    archive? = done.content
-    |> Enum.reject(&(String.trim(&1) == ""))
-    |> Enum.any?
-
+    archive? =
+      done.content
+      |> Enum.reject(&(String.trim(&1) == ""))
+      |> Enum.any?()
 
     if should_archive?(done) do
       Tl.File.prepend(
