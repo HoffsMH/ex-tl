@@ -48,4 +48,6 @@ defmodule Tl.File do
       content
     end
   end
+
+  defdelegate ls!(dir), to: File
 end

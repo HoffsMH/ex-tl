@@ -50,6 +50,11 @@ defmodule Tl.Startx.Supervisor do
         restart: :transient
       },
       %{
+        id: :polybar,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/polybar", ["-c ~/.config/polybar/config/polybarconfig", "main"]]},
+        restart: :transient
+      },
+      %{
         id: :restic_backup,
         start:
           {Tl.Cmd, :start_link,
