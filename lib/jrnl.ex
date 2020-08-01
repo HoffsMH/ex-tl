@@ -129,7 +129,11 @@ defmodule Tl.Jrnl do
     # I want to use System.cmd here
     {content, 0} = System.cmd("cat", filenames)
 
-    :crypto.hash(:sha256, content)
+    digest(content)
+  end
+
+  def digest(text) do
+    :crypto.hash(:sha256, text)
     |> Base.encode16()
     |> String.downcase()
     |> String.slice(-10, 10)
