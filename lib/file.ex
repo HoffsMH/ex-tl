@@ -50,4 +50,7 @@ defmodule Tl.File do
   end
 
   defdelegate ls!(dir), to: File
+  defdelegate rename(x, y), to: File
+  defdelegate touch(x), to: File
+  defdelegate chmod(x, y), to: File
 end

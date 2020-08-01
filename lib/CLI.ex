@@ -30,11 +30,16 @@ defmodule Tl.CLI do
       - split
       - archive-done
     - bw
+    - rm <filenames>
     """)
   end
 
   def main(["taskell" | rest]) do
     Tl.Taskell.call(rest)
+  end
+
+  def main(["rm" | rest]) do
+    Tl.Rm.call(rest)
   end
 
   def main(["startx" | rest]) do
