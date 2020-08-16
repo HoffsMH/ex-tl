@@ -19,6 +19,15 @@ defmodule Tl.Startx.Supervisor do
     Supervisor.init(children(), strategy: :one_for_one)
   end
 
+  def pause_greenclip do
+    Supervisor.terminate_child(__MODULE__, :greenclip)
+    :os.cmd('pkill greenclip')
+  end
+
+  def start_greenclip do
+    Supervisor.restart_child(__MODULE__, :greenclip)
+  end
+
   def children() do
     [
       %{

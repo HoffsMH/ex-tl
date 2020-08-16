@@ -43,6 +43,10 @@ defmodule Tl.CLI do
   end
 
   def main(["startx" | rest]) do
+    :os.cmd('epmd -daemon')
+    Node.start(:startx)
+    System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
+
     Tl.Startx.call(rest)
   end
 
@@ -72,6 +76,24 @@ defmodule Tl.CLI do
       |> IO.inspect()
 
     Tl.File.append(cap_file(), "- " <> content)
+  end
+
+  def main(["pause_greenclip"]) do
+    :os.cmd('epmd -daemon')
+    Node.start(:cli)
+    System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
+    startx = :"startx@localhost.localdomain"
+
+    Node.spawn(startx, fn -> Tl.Startx.Supervisor.pause_greenclip; end)
+  end
+
+  def main(["start_greenclip"]) do
+    :os.cmd('epmd -daemon')
+    Node.start(:cli)
+    System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
+    startx = :"startx@localhost.localdomain"
+
+    Node.spawn(startx, fn -> Tl.Startx.Supervisor.start_greenclip; end)
   end
 
   def main(["bw" | args]) do
