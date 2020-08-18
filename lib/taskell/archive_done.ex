@@ -3,15 +3,17 @@ defmodule Tl.Taskell.ArchiveDone do
   Documentation for Tl.
   """
 
+  def file(), do: Application.get_env(:tl, :file_module, Tl.File)
+
   def board() do
     Application.get_env(:tl, :paths)
     |> Access.get(:taskell_board)
     |> Path.expand()
   end
 
-  def done_archive() do
+  def done_archive_dir() do
     Application.get_env(:tl, :paths)
-    |> Access.get(:done_archive)
+    |> Access.get(:done_archive_dir)
     |> Path.expand()
   end
 
@@ -42,20 +44,14 @@ defmodule Tl.Taskell.ArchiveDone do
     File.write!(board(), new_content)
     log("reading content of board now: #{File.read!(board())}")
 
-    timestamp = Time.to_iso8601(Time.utc_now())
-
-    content = Tl.Heading.to_string(done)
-
-    archive? =
-      done.content
-      |> Enum.reject(&(String.trim(&1) == ""))
-      |> Enum.any?()
-
     if should_archive?(done) do
-      Tl.File.prepend(
-        done_archive(),
-        gen_header() <> Tl.Heading.to_string_content_only(done)
-      )
+      file.mkdir_p!(done_archive_dir)
+      # filename
+      # file.touch(done_archive_dir <> "/" <> Tl.time.iso() <> ".md")
+      # Tl.File.prepend(
+      #   done_archive_dir(),
+      #   gen_header() <> Tl.Heading.to_string_content_only(done)
+      # )
     end
   end
 
@@ -64,21 +60,12 @@ defmodule Tl.Taskell.ArchiveDone do
   end
 
   def gen_header() do
-    date_string =
-      Timex.now()
-      |> Timex.format!("%F", :strftime)
-
-    time_string =
-      Timex.now()
-      |> Timex.shift(hours: -4)
-      |> Timex.format!("%r EDT", :strftime)
-
-    full = Timex.format!(Timex.now(), "{ISO:Extended}")
+    alias Tl.Time, as: T
 
     """
     =====================================================
-    date: #{date_string} time: #{time_string}
-    #{full}
+    date: #{T.datestamp} time: #{T.hours_minutes}
+    #{T.iso}
     =====================================================
     """
   end
