@@ -34,6 +34,7 @@
 
 ## Doing
 
+- can archive-done for the current directory and when done archives in a way that lets me know where the done task came from
 
 ## Done
 
