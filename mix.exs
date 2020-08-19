@@ -33,7 +33,7 @@ defmodule Tl.MixProject do
       {:timex, "~> 3.5"},
       {:quantum, "~> 2.3"},
       {:poison, "~> 4.0"},
-      {:tzdata, path: "vendor/tzdata", override: true},
+      {:tzdata, path: "vendor/tzdata", override: true}
     ]
   end
 end

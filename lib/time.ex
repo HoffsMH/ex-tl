@@ -26,13 +26,20 @@ defmodule Tl.Time do
 
   def get_system_offset do
     :os.cmd('date +%z')
-    |> List.to_string
-    |> String.trim
+    |> List.to_string()
+    |> String.trim()
     |> String.slice(0, 3)
-    |> String.to_integer
+    |> String.to_integer()
   end
 
   def fake_tz do
-      Elixir.Timex.TimezoneInfo.create("localTime", "LOC", 60*60*get_system_offset, 0, :min, :max)
+    Elixir.Timex.TimezoneInfo.create(
+      "localTime",
+      "LOC",
+      60 * 60 * get_system_offset,
+      0,
+      :min,
+      :max
+    )
   end
 end

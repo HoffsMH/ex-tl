@@ -19,9 +19,7 @@ defmodule Tl.Taskell.ArchiveDone do
 
   def call() do
     columns =
-      get_file_entry()
-      |> Tl.Parser.parse()
-      |> Enum.reverse()
+      get_columns()
 
     done =
       columns
@@ -29,16 +27,7 @@ defmodule Tl.Taskell.ArchiveDone do
 
     new_content =
       columns
-      |> Enum.map(fn %{value: value, content: content} ->
-        if value === "## Done" do
-          %Tl.Heading{value: value, content: []}
-        else
-          %Tl.Heading{value: value, content: content}
-        end
-      end)
-      |> Enum.reduce("", fn column, acc ->
-        acc <> Tl.Heading.to_string(column)
-      end)
+      |> Enum.reduce("", &column_reducer/2)
 
     log("about to File.Write! content to board: #{new_content}")
     File.write!(board(), new_content)
@@ -46,14 +35,23 @@ defmodule Tl.Taskell.ArchiveDone do
 
     if should_archive?(done) do
       file.mkdir_p!(done_archive_dir)
-      # filename
-      # file.touch(done_archive_dir <> "/" <> Tl.time.iso() <> ".md")
-      # Tl.File.prepend(
-      #   done_archive_dir(),
-      #   gen_header() <> Tl.Heading.to_string_content_only(done)
-      # )
+
+      with filename <- Path.expand(Tl.Time.iso() <> ".md", done_archive_dir) do
+        file.touch(filename)
+
+        file.prepend(
+          filename,
+          gen_header() <> Tl.Heading.to_string_content_only(done)
+        )
+      end
     end
   end
+
+  def column_reducer(%{value: "## Done", content: content}, acc),
+    do: acc <> Tl.Heading.to_string(%{value: "## Done", content: []})
+
+  def column_reducer(column, acc),
+    do: acc <> Tl.Heading.to_string(column)
 
   def should_archive?(done) do
     Tl.Heading.any_content?(done)
@@ -64,14 +62,16 @@ defmodule Tl.Taskell.ArchiveDone do
 
     """
     =====================================================
-    date: #{T.datestamp} time: #{T.hours_minutes}
-    #{T.iso}
+    date: #{T.datestamp()} time: #{T.hours_minutes()}
+    #{T.iso()}
     =====================================================
     """
   end
 
-  def get_file_entry() do
-    File.read!(board())
+  def get_columns() do
+    file.read(board())
+    |> Tl.Parser.parse()
+    |> Enum.reverse()
   end
 
   def log(text) do
