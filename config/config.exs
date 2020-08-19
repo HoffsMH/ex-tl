@@ -17,7 +17,8 @@ config :tl, :paths,
   jrnl_archive: "~/personal/personal-reference/jrnlarchive",
   taskell_board: "~/personal/01-schedule/board/taskell.md",
   done_archive_dir: "~/personal/00-capture/done-archive/",
-  capture_file: "~/personal/00-capture/capture.md"
+  capture_file: "~/personal/00-capture/capture.md",
+  capture_dir: "~/personal/00-capture"
 
 # where we store our monthly log files
 config :tl, :cmd, logfile_dir: "~/.tl/"

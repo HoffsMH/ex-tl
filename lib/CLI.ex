@@ -12,6 +12,7 @@ defmodule Tl.CLI do
 
   def main(["help"]) do
     IO.puts("""
+    - new cap <name>
     - cap <quick content>
     - startx
     - filename
@@ -40,6 +41,10 @@ defmodule Tl.CLI do
 
   def main(["rm" | rest]) do
     Tl.Rm.call(rest)
+  end
+
+  def main(["new" | rest]) do
+    Tl.New.call(rest)
   end
 
   def main(["startx" | rest]) do
@@ -84,7 +89,7 @@ defmodule Tl.CLI do
     System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
     startx = :"startx@localhost.localdomain"
 
-    Node.spawn(startx, fn -> Tl.Startx.Supervisor.pause_greenclip; end)
+    Node.spawn(startx, fn -> Tl.Startx.Supervisor.pause_greenclip() end)
   end
 
   def main(["start_greenclip"]) do
@@ -93,7 +98,7 @@ defmodule Tl.CLI do
     System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
     startx = :"startx@localhost.localdomain"
 
-    Node.spawn(startx, fn -> Tl.Startx.Supervisor.start_greenclip; end)
+    Node.spawn(startx, fn -> Tl.Startx.Supervisor.start_greenclip() end)
   end
 
   def main(["bw" | args]) do

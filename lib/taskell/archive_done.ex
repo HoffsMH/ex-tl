@@ -18,8 +18,7 @@ defmodule Tl.Taskell.ArchiveDone do
   end
 
   def call() do
-    columns =
-      get_columns()
+    columns = get_columns()
 
     done =
       columns

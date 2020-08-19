@@ -14,10 +14,10 @@
 
 - investigate what would be needed to get syncthing into TL and whether or not it would be worth it
 - somehow I am trying to do stuff to a tar file and its empty before I have appended a sha to the tar name???
-- makes a scratch new capture file for a given topic and opens subl to that file
-- conky setup to tl
-    > This requires using ports to stream output from conky command into xsetroot. See ~/.xinit for what needs to be done
 - thing to remove syncthing conflicts on files that I know are append only
+- cap merge/browse
+    > some sort of functionality towards looking at all the new categories and either compressing deleting or taskifying them
+    * [ ] 
 
 ## Selected
 
@@ -25,20 +25,15 @@
     * [ ] possibly split and the parsing inside
     * [ ] possibly startx
     * [ ] possibly jrnl
-- done archive syncthing conflicts why?
 - put refresh in other tasks in right spot
-- tl new cap
-    > this thing creates a new capture file that can be later folded into the main capture file. The reason for this is that I want to be able to write stuff independant of private stuff that might be my main capture file. I guess another thing is needed something like tl cap merge
-    * [ ] maybe  its more of a category creation maybe category creation is  a list of categories in a category file and each entry is a folder with a capture file inside and  I can basically run tl cap with a prefixed category somehow to file it away in that category.
-    * [ ] 
-    * [ ] 
 
 ## Waiting on Something
 
+- test split columns
 
 ## Doing
 
-- test split columns
+- makes a scratch new capture file for a given topic and opens subl to that file
 
 ## Done
 
@@ -57,3 +52,13 @@
 - investigate getting all systemctl work in bootstrap into tl
     * [ ] restic backup (done)
     * [ ] syncthing (this is automatic so leave it alone for now)
+- done archive syncthing conflicts why?
+    > solved this by implementing write only system. a new file with timestamp for name is is archiving can later implement a cat
+- conky setup to tl
+    > This requires using ports to stream output from conky command into xsetroot. See ~/.xinit for what needs to be done
+    * [ ] ended up with polybar config
+- tl new cap
+    > this thing creates a new capture file that can be later folded into the main capture file. The reason for this is that I want to be able to write stuff independant of private stuff that might be my main capture file. I guess another thing is needed something like tl cap merge
+    * [x] maybe  its more of a category creation maybe category creation is  a list of categories in a category file and each entry is a folder with a capture file inside and  I can basically run tl cap with a prefixed category somehow to file it away in that category.
+    * [x] also if we have something in clipboard throw it in there
+    * [x] also open it in text editor upon creation?
