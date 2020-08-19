@@ -9,6 +9,7 @@
 - randomly create a puzzle game
 - generalized ability to get date from command line for piping into other things
 - refactor bw into its own module
+    * [ ] or we could separate out into rofi, or even better auto type without ever touching system clipboard
 
 ## Warm
 
@@ -33,7 +34,6 @@
 
 ## Doing
 
-- makes a scratch new capture file for a given topic and opens subl to that file
 
 ## Done
 
@@ -62,3 +62,4 @@
     * [x] maybe  its more of a category creation maybe category creation is  a list of categories in a category file and each entry is a folder with a capture file inside and  I can basically run tl cap with a prefixed category somehow to file it away in that category.
     * [x] also if we have something in clipboard throw it in there
     * [x] also open it in text editor upon creation?
+- makes a scratch new capture file for a given topic and opens subl to that file
