@@ -63,15 +63,7 @@ defmodule Tl.Startx.Supervisor do
         start:
           {Tl.Cmd, :start_link,
            [
-             "/usr/bin/restic",
-             [
-               "backup",
-               "--verbose",
-               "--tag",
-               "systemd.timer",
-               "--exclude-file=/home/hoffs/.restic_excludes",
-               "/home/hoffs/"
-             ]
+             Path.expand("~/bin/resticbackup"), []
            ]},
         restart: :temporary
       },
