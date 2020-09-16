@@ -33,17 +33,6 @@ defmodule Tl.Startx.SupervisorTest do
                start: {Tl.Cmd, :start_link, ["/usr/bin/greenclip", ["daemon"]]},
                restart: :transient
              },
-             {Tl.ClosedWatcher,
-              {Tl.ClosedWatcher, :start_link,
-               [
-                 [
-                   fs_args: [
-                     dirs: ["/home/hoffs/personal/01-schedule/board/taskell.md"],
-                     name: :board_monitor
-                   ],
-                   call_mod: Tl.Taskell.SplitColumns
-                 ]
-               ]}, :permanent, 5000, :worker, [Tl.ClosedWatcher]},
              Tl.Scheduler
            ]
   end
