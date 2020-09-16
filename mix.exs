@@ -29,7 +29,6 @@ defmodule Tl.MixProject do
 
   defp deps do
     [
-      {:file_system, "~> 0.2"},
       {:timex, "~> 3.5"},
       {:quantum, "~> 2.3"},
       {:poison, "~> 4.0"},

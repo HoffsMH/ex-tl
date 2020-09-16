@@ -28,7 +28,6 @@ defmodule Tl.CLI do
       - new <name>
       - refresh
     - taskell
-      - split
       - archive-done
     - bw
     - rm <filenames>

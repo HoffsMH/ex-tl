@@ -67,12 +67,6 @@ defmodule Tl.Startx.Supervisor do
            ]},
         restart: :temporary
       },
-      worker(Tl.ClosedWatcher, [
-        [
-          fs_args: [dirs: [board()], name: :board_monitor],
-          call_mod: Tl.Taskell.SplitColumns
-        ]
-      ]),
       Tl.Scheduler
     ] ++ machine_specific_workers()
   end
