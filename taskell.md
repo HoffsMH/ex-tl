@@ -27,12 +27,10 @@
     * [ ] possibly startx
     * [ ] possibly jrnl
 - put refresh in other tasks in right spot
-- split only does relevant columns like doing and today
 - safety, dont rm jrnl mds unless the gpg is fully formed
 
 ## Waiting on Something
 
-- test split columns
 
 ## Doing
 
