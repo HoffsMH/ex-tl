@@ -15,7 +15,7 @@ config :tl, :user,
 config :tl, :paths,
   jrnl_dir: "~/personal/jrnl",
   jrnl_archive: "~/personal/personal-reference/jrnlarchive",
-  taskell_board: "~/personal/01-schedule/board/taskell.md",
+  taskell_board: "~/personal/00-capture/board/taskell.md",
   done_archive_dir: "~/personal/00-capture/done-archive/",
   capture_file: "~/personal/00-capture/capture.md",
   capture_dir: "~/personal/00-capture"

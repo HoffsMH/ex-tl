@@ -82,24 +82,6 @@ defmodule Tl.CLI do
     Tl.File.append(cap_file(), "- " <> content)
   end
 
-  def main(["pause_greenclip"]) do
-    :os.cmd('epmd -daemon')
-    Node.start(:cli)
-    System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
-    startx = :"startx@localhost.localdomain"
-
-    Node.spawn(startx, fn -> Tl.Startx.Supervisor.pause_greenclip() end)
-  end
-
-  def main(["start_greenclip"]) do
-    :os.cmd('epmd -daemon')
-    Node.start(:cli)
-    System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
-    startx = :"startx@localhost.localdomain"
-
-    Node.spawn(startx, fn -> Tl.Startx.Supervisor.start_greenclip() end)
-  end
-
   def main(["bw" | args]) do
     # call bw list
     with {items_json, 0} <- System.cmd("bw", ["list", "items", "--search", "#{Enum.at(args, 0)}"]) do

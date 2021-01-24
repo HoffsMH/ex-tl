@@ -28,11 +28,6 @@ defmodule Tl.Startx.SupervisorTest do
                   ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
                restart: :transient
              },
-             %{
-               id: :greenclip,
-               start: {Tl.Cmd, :start_link, ["/usr/bin/greenclip", ["daemon"]]},
-               restart: :transient
-             },
              Tl.Scheduler
            ]
   end

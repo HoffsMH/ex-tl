@@ -19,15 +19,6 @@ defmodule Tl.Startx.Supervisor do
     Supervisor.init(children(), strategy: :one_for_one)
   end
 
-  def pause_greenclip do
-    Supervisor.terminate_child(__MODULE__, :greenclip)
-    :os.cmd('pkill greenclip')
-  end
-
-  def start_greenclip do
-    Supervisor.restart_child(__MODULE__, :greenclip)
-  end
-
   def children() do
     [
       %{
@@ -51,11 +42,6 @@ defmodule Tl.Startx.Supervisor do
       %{
         id: :xcape,
         start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
-        restart: :transient
-      },
-      %{
-        id: :greenclip,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/greenclip", ["daemon"]]},
         restart: :transient
       },
       %{
