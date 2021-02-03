@@ -56,26 +56,4 @@ defmodule Tl.Startx.Supervisor do
       Tl.Scheduler
     ] ++ machine_specific_workers()
   end
-
-  def get_polybar_monitors() do
-    {output, 0} = Tl.Cmd.exec("polybar", ["--list-monitors"])
-
-    output
-    |> String.split("\n")
-    |> Enum.map(&String.split(&1, ":"))
-    |> Enum.map(&Enum.at(&1, 0))
-  end
-
-  def poly_bar_child_specs() do
-    get_polybar_monitors()
-    |> Enum.reject(&(&1 == ""))
-    |> Enum.map(&monitor_name_to_spec/1)
-  end
-
-  def monitor_name_to_spec(name) do
-    %{
-      id: String.to_atom("polybar_#{name}"),
-      start: {Tl.OsCmd, :start_link, ["MONITOR=#{name} /usr/bin/polybar --reload main"]}
-    }
-  end
 end
