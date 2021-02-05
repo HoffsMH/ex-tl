@@ -22,6 +22,7 @@ config :tl, :paths,
 
 # where we store our monthly log files
 config :tl, :cmd, logfile_dir: "~/.tl/"
+config :logger, level: :error
 
 if File.regular?("./config/machine_specific.exs") do
   IO.puts("found machine specific config")
