@@ -49,7 +49,8 @@ defmodule Tl.Startx.Supervisor do
         start:
           {Tl.Cmd, :start_link,
            [
-             Path.expand("~/bin/resticbackup"), []
+             Path.expand("~/bin/resticbackup"),
+             []
            ]},
         restart: :temporary
       },

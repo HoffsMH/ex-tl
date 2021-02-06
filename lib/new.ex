@@ -7,9 +7,9 @@ defmodule Tl.New do
 
   def call(["cap", cap_name]) do
     Tl.File.mkdir_p!(cap_dir(cap_name))
+
     with filename <- cap_file_name(cap_name) do
       {output, _} = System.cmd("xclip", ["-o"])
-      IO.puts output
 
       Tl.File.touch(filename)
       Tl.File.append(filename, output)

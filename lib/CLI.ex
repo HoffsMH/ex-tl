@@ -80,5 +80,4 @@ defmodule Tl.CLI do
 
     Tl.File.append(cap_file(), "- " <> content)
   end
-
 end

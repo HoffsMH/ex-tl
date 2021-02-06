@@ -10,7 +10,7 @@ defmodule Tl.Startx do
     Tl.Cmd.start("/usr/bin/brave")
     Tl.Cmd.start("/usr/bin/slack")
     Tl.Cmd.start("/usr/bin/google-chrome-stable")
-    Tl.Cmd.exec("/usr/bin/feh", ["--bg-scale", Path.expand("~/.wall.jpg")])
+    Tl.Cmd.exec("/usr/bin/xwallpaper", ["--focus", Path.expand("~/.wall.jpg")])
 
     log("starting long running commands")
     Tl.Startx.Supervisor.start_link(name: Tl.Startx.Supervisor)

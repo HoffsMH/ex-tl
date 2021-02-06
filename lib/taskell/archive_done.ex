@@ -69,6 +69,7 @@ defmodule Tl.Taskell.ArchiveDone do
 
   def get_columns() do
     IO.puts(board())
+
     file.read(board())
     |> Tl.Parser.parse()
     |> Enum.reverse()
