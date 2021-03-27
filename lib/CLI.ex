@@ -46,9 +46,9 @@ defmodule Tl.CLI do
   end
 
   def main(["startx" | rest]) do
-    :os.cmd('epmd -daemon')
-    Node.start(:startx)
-    System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
+    # :os.cmd('epmd -daemon')
+    # Node.start(:startx)
+    # System.get_env("BEAM_COOKIE") |> String.to_atom() |> Node.set_cookie()
 
     Tl.Startx.call(rest)
   end
