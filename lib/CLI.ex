@@ -80,4 +80,16 @@ defmodule Tl.CLI do
 
     Tl.File.append(cap_file(), "- " <> content)
   end
+
+  def main(["workup" , val]) do
+    { weight, _ } = Float.parse(val)
+    first = weight * 0.60
+    second = weight * 0.80
+
+    IO.puts("#{val}(#{side(weight)})  (#{side(first)}, #{side(second)})")
+  end
+
+  def side(weight) do
+    (weight - 45)/2
+  end
 end
