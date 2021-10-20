@@ -27,7 +27,7 @@ defmodule Tl.Jrnl do
       sorted_archived_gpg_list()
       |> Enum.at(0)
 
-    file.cp!(filename, "#{file.cwd!()}/#{path.basename(filename)}")
+    file().cp!(filename, "#{file().cwd!()}/#{path().basename(filename)}")
   end
 
   def call(["lock"]) do
