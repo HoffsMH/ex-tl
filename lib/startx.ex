@@ -6,7 +6,6 @@ defmodule Tl.Startx do
 
     log("run once")
 
-    Tl.Cmd.start(Path.expand("~/bin/term"))
     Tl.Cmd.start("/usr/bin/brave")
     Tl.Cmd.start("/usr/bin/slack")
     Tl.Cmd.start("/usr/bin/google-chrome-stable")
