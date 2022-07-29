@@ -36,10 +36,6 @@ defmodule Tl.Startx.Supervisor do
         start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]}
       },
       %{
-        id: :pcloud,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/pcloud", []]}
-      },
-      %{
         id: :xcape,
         start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
         restart: :transient
