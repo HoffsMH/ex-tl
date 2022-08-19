@@ -41,11 +41,7 @@ defmodule Tl.Startx.Supervisor do
         restart: :transient
       },
 
-      %{
-        id: :xcape,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Super_R=Space"]]},
-        restart: :transient
-      },
+
       Tl.Scheduler
     ] ++ machine_specific_workers()
   end
