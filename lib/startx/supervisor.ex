@@ -40,15 +40,11 @@ defmodule Tl.Startx.Supervisor do
         start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
         restart: :transient
       },
+
       %{
-        id: :restic_backup,
-        start:
-          {Tl.Cmd, :start_link,
-           [
-             Path.expand("~/bin/resticbackup"),
-             []
-           ]},
-        restart: :temporary
+        id: :xcape,
+        start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Super_R=Space"]]},
+        restart: :transient
       },
       Tl.Scheduler
     ] ++ machine_specific_workers()
