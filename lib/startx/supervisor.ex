@@ -37,7 +37,7 @@ defmodule Tl.Startx.Supervisor do
       },
       %{
         id: :xcape,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "200", "-e", "Control_L=Escape"]]},
+        start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "100", "-e", "Control_L=Escape"]]},
         restart: :transient
       },
 
