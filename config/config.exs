@@ -5,7 +5,6 @@ config :logger, level: :error
 config :tl, Tl.Scheduler,
   jobs: [
     {"0 */3 * * *", {Tl.Taskell.ArchiveDone, :call, []}},
-    {"*/15 * * * *", {Tl.Jrnl.AutoLock, :call, []}}
   ]
 
 config :tl, :user,
