@@ -35,12 +35,6 @@ defmodule Tl.Startx.Supervisor do
         id: :rescuetime,
         start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]}
       },
-      %{
-        id: :xcape,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/xcape", ["-t", "100", "-e", "Control_L=Escape"]]},
-        restart: :transient
-      },
-
 
       Tl.Scheduler
     ] ++ machine_specific_workers()
