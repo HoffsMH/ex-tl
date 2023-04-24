@@ -21,16 +21,10 @@ defmodule Tl.Startx.Supervisor do
 
   def children() do
     [
-      %{
-        id: :redshift,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/redshift", []]}
-      },
-      %{id: :sxhkd, start: {Tl.Cmd, :start_link, ["/usr/bin/sxhkd", []]}},
-      %{
-        id: :xset,
-        start: {Tl.Cmd, :start_link, ["/usr/bin/xset", ["r", "rate", "200", "30"]]},
-        restart: :transient
-      },
+      # %{
+      #   id: :redshift,
+      #   start: {Tl.Cmd, :start_link, ["/usr/bin/redshift", []]}
+      # },
       %{
         id: :rescuetime,
         start: {Tl.Cmd, :start_link, ["/usr/bin/rescuetime", []]}
