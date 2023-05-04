@@ -23,10 +23,6 @@ defmodule Tl.CLI do
     Tl.Rm.call(rest)
   end
 
-  def main(["filename" | rest]) do
-    Tl.Filename.call(rest)
-  end
-
   def main(["jrnl" | rest]) do
     Tl.Jrnl.call(rest)
   end
