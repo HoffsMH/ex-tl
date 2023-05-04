@@ -4,15 +4,10 @@ defmodule Tl.CLI do
 
   def main(["help"]) do
     IO.puts("""
-    - new cap <name>
-    - cap <quick content>
     - filename
       - prepend <filenames>
         - date <filenames>
         - datetime <filenames>
-    - file
-      - prepend <filename> <content>
-      - append <filename> <content>
     - jrnl
       - lock
       - unlock
@@ -30,10 +25,6 @@ defmodule Tl.CLI do
 
   def main(["filename" | rest]) do
     Tl.Filename.call(rest)
-  end
-
-  def main(["file" | rest]) do
-    Tl.File.call(rest)
   end
 
   def main(["jrnl" | rest]) do
